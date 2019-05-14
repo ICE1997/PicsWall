@@ -10,45 +10,47 @@
             padding: 0;
         }
 
+        body {
+            width: 1900px;
+            height: 100%;
+            margin: 0 auto;
+        }
+
         .header {
             position: relative;
-            /* background-color: darkorange; */
             background-image: url("head.jpg");
             background-repeat: no-repeat;
             background-position: center;
+            background-size: cover;
             width: 100%;
-            height: 412px;
+            height: 539px;
             z-index: 99;
+        }
+
+        .header .slogan{
+            position: absolute;
+            height: 60px;
+            line-height: 60px;
+            margin: 0 auto;
+            text-align: center;
+            top: 50%;
+            bottom: 50%;
+            left: 3%;
+            color: white;
+            font-size: 78px;
         }
 
         .navigation {
             position: relative;
-            background-color: crimson;
             height: 40px;
-        }
-
-        /*.navigation .brand {*/
-        /*    position: relative;*/
-        /*    display: inline-block;*/
-        /*    height: 100%;*/
-        /*    width: 40px;*/
-        /*    background-color: blueviolet;*/
-        /*}*/
-
-        .navigation .blur {
-            position: absolute;
             width: 100%;
-            height: 100%;
-            background-position: center;
-            background-image: url("head.jpg");
-            background-repeat: no-repeat;
         }
 
         .navigation .mask {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .navigation .auth {
@@ -57,7 +59,6 @@
             right: 0;
             height: 40px;
             width: 140px;
-            /*background-color: blue;*/
             text-align: center;
         }
 
@@ -66,7 +67,6 @@
             display: inline-block;
             height: 100%;
             width: 40px;
-            /*background-color: cornflowerblue;*/
             padding-left: 10px;
             padding-right: 10px;
             color: white;
@@ -76,20 +76,20 @@
 
 
         .navigation .auth .auth_btn:hover {
-            background-color: blueviolet;
+            background-color: brown;
         }
 
         .title {
             position: absolute;
-            background-color: yellow;
+            background-color: rgba(255, 255, 255, 0.5);
             margin: 0 auto;
             left: 0;
             right: 0;
             width: 40%;
-            height: 40px;
-            bottom: -20px;
+            height: 60px;
+            bottom: -30px;
             text-align: center;
-            line-height: 40px;
+            line-height: 60px;
             color: black;
         }
 
@@ -99,8 +99,6 @@
         }
 
         .title div {
-            /*background-color: black;*/
-            /*color: white;*/
             width: 50%;
             float: left;
         }
@@ -110,8 +108,35 @@
             width: 70%;
             height: 940px;
             margin: 0 auto;
-            background-color: cornflowerblue;
+            background-color: gainsboro;
         }
+
+        .wp {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            top: 30px;
+            /* background-color: black;  */
+        }
+
+        .wp .wp-card {
+            position: relative;
+            width: 80%;
+            height: 512px;
+            top: 48px;
+            margin: 0 auto;
+            background-image: url("head1.jpg");
+            background-position: center;
+        }
+
+        .wp .wp-card .wp-card-info {
+            position: absolute;
+            width: 100%;
+            height: 64px;
+            bottom: 0;
+            background-color:rgba(255, 255, 255, 0.4);
+        }
+
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 </head>
@@ -119,8 +144,6 @@
 <body>
     <div class="header">
         <nav class="navigation">
-
-            <div class="blur"></div>
             <div class="mask"></div>
 
             <div class="auth">
@@ -133,6 +156,7 @@
                 </div>
             </div>
         </nav>
+        <p class="slogan">SHOW YOU & LIFE</p>
         <div class="title">
             <div>好友</div>
             <div>我的</div>
@@ -140,7 +164,13 @@
     </div>
 
     <div class="content">
-
+        <div class="wp">
+            <div class="wp-card">
+                <div class="wp-card-info">
+                    
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
