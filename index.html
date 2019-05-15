@@ -1,157 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" >
+    <meta name="viewport">
     <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
     <style>
         * {
             margin: 0;
             padding: 0;
         }
 
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0 auto;
+        .my-body {
+            margin: 0;
+            padding: 0;
         }
 
         .header {
             position: relative;
-            background-image: url("head.jpg");
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 521px;
+            background-image: url("/head.jpg");
             background-repeat: no-repeat;
-            background-position: center;
             background-size: cover;
-            width: 100%;
-            height: 539px;
-            z-index: 99;
-        }
-
-        .header .slogan {
-            position: absolute;
-            height: 60px;
-            line-height: 60px;
-            margin: 0 auto;
-            text-align: center;
-            top: 50%;
-            bottom: 50%;
-            left: 3%;
-            color: white;
-            font-size: 78px;
-        }
-
-        .navigation {
-            position: relative;
-            height: 40px;
-            width: 100%;
-        }
-
-        .navigation .mask {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .navigation .auth {
-            position: absolute;
-            display: inline-block;
-            right: 0;
-            height: 40px;
-            width: 140px;
-            text-align: center;
-        }
-
-        .navigation .auth .auth_btn {
-            position: relative;
-            display: inline-block;
-            height: 100%;
-            width: 40px;
-            padding-left: 10px;
-            padding-right: 10px;
-            color: white;
-            line-height: 40px;
-            transition: all 0.3s;
-        }
-
-
-        .navigation .auth .auth_btn:hover {
-            background-color: brown;
-        }
-
-        .title {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.5);
-            margin: 0 auto;
-            left: 0;
-            right: 0;
-            width: 40%;
-            height: 60px;
-            bottom: -30px;
-            text-align: center;
-            line-height: 60px;
-            color: black;
-        }
-
-        .title span {
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-
-        .title div {
-            width: 50%;
-            float: left;
-        }
-
-        .content {
-            position: relative;
-            width: 70%;
-            height: 100%;
-            margin: 0 auto;
-            background-color: gainsboro;
-        }ll
-
-        .wp {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            top: 30px;
-        }
-
-        .wp .wp-card {
-            position: relative;
-            width: 80%;
-            height: 512px;
-            top: 48px;
-            margin: 0 auto;
-            background-image: url("head1.jpg");
             background-position: center;
         }
 
-        .wp .wp-card .wp-card-info {
+        .header .navigation {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            height: 44px;
+        }
+
+        .header .navigation .mask {
             position: absolute;
-            width: 100%;
-            height: 64px;
-            text-align: center;
-            line-height: 64px;
-            bottom: 0;
+            margin: 0;
+            padding: 0;
+            height: 100%;
             background-color: rgba(255, 255, 255, 0.4);
         }
+
+        .header .navigation .auth {
+            position: absolute;
+            width: 12%;
+            height: 100%;
+            right: 0;
+            /* background-color: #fff; */
+            text-align: right;
+        }
+
+        .header .navigation .auth .auth-btn {
+            position: relative;
+            display: inline-block;
+            line-height: 40px;
+            /* background-color: white; */
+            padding-left: 10%;
+            padding-right: 10%;
+            height: 100%;
+            transition: ALL 0.3s;
+        }
+
+
+        .header .navigation .auth .auth-btn:hover {
+            background-color: brown;
+            color: white;
+        }
     </style>
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 </head>
 
-<body>
-    <div class="header">
-        <nav class="navigation">
-            <div class="mask"></div>
+<body class="container-fluid my-body">
+    <div class="container-fluid header">
+        <nav class="container-fluid navigation">
+            <div class="container-fluid mask"></div>
 
-            <div class="auth">
-                <div class="auth_btn">
+            <div class="container-fluid auth">
+                <div class="auth-btn">
                     登录
                 </div>
 
-                <div class="auth_btn">
+                <div class="auth-btn">
                     注册
                 </div>
             </div>
@@ -179,8 +115,8 @@
                         发布者:你猜
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
