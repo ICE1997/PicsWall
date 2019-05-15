@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" >
     <title>首页</title>
     <style>
         * {
@@ -11,7 +11,7 @@
         }
 
         body {
-            width: 1900px;
+            width: 100%;
             height: 100%;
             margin: 0 auto;
         }
@@ -27,7 +27,7 @@
             z-index: 99;
         }
 
-        .header .slogan{
+        .header .slogan {
             position: absolute;
             height: 60px;
             line-height: 60px;
@@ -106,17 +106,16 @@
         .content {
             position: relative;
             width: 70%;
-            height: 940px;
+            height: 100%;
             margin: 0 auto;
             background-color: gainsboro;
-        }
+        }ll
 
         .wp {
             position: relative;
             width: 100%;
             height: 100%;
             top: 30px;
-            /* background-color: black;  */
         }
 
         .wp .wp-card {
@@ -133,10 +132,11 @@
             position: absolute;
             width: 100%;
             height: 64px;
+            text-align: center;
+            line-height: 64px;
             bottom: 0;
-            background-color:rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.4);
         }
-
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 </head>
@@ -167,9 +167,18 @@
         <div class="wp">
             <div class="wp-card">
                 <div class="wp-card-info">
-                    
+                    <div class="publisher">
+                        发布者:你猜
+                    </div>
                 </div>
             </div>
+
+            <div class="wp-card">
+                <div class="wp-card-info">
+                    <div class="publisher">
+                        发布者:你猜
+                    </div>
+                </div>
         </div>
     </div>
 </body>
