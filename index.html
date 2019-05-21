@@ -17,9 +17,10 @@
             padding: 0;
         }
 
-        .my-body {
-            margin: 0;
-            padding: 0;
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: rgb(216, 207, 196);
         }
 
         .header {
@@ -36,72 +37,131 @@
 
         .header .navigation {
             position: relative;
-            margin: 0;
-            padding: 0;
             height: 44px;
         }
 
         .header .navigation .mask {
             position: absolute;
-            margin: 0;
-            padding: 0;
+            left: 0;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.4);
         }
 
         .header .navigation .auth {
             position: absolute;
-            width: 12%;
-            height: 100%;
             right: 0;
-            /* background-color: #fff; */
-            text-align: right;
         }
 
-        .header .navigation .auth .auth-btn {
-            position: relative;
-            display: inline-block;
-            line-height: 40px;
-            /* background-color: white; */
-            padding-left: 10%;
-            padding-right: 10%;
-            height: 100%;
-            transition: ALL 0.3s;
+        .auth .btn-auth {
+            color: #fff;
         }
 
-
-        .header .navigation .auth .auth-btn:hover {
+        .auth .btn-auth:hover {
+            color: #fff;
             background-color: brown;
-            color: white;
+            border-color: brown;
+        }
+
+        .auth .btn-auth:focus,
+        .auth .btn-auth.focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.0);
+        }
+
+        .auth .btn-auth:not(:disabled):not(.disabled):active:focus,
+        .auth .btn-auth:not(:disabled):not(.disabled).active:focus,
+        .auth .show>.btn-auth.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(245, 47, 47, 0.5);
+        }
+
+        .header .slogan {
+            position: absolute;
+            color: #fff;
+            font-size: 64px;
+            text-align: center;
+            top: 50%;
+        }
+
+        .header .title-box {
+            position: absolute;
+            height: 64px;
+            width: 60%;
+            bottom: -32px;
+            margin-left: 20%;
+            margin-right: 20%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.4);
+            z-index: 99;
+        }
+
+        .header .title-box .title {
+            position: relative;
+            font-size: 24px;
+            line-height: 64px;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin: 0;
+            padding: 0;
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .wp {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .wp .wp-card {
+            position: relative;
+            height: 512px;
+            width: 60%;
+            margin: 0 auto;
+            margin-bottom: 48px;
+            background-image: url("./head1.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .wp .wp-card .wp-card-info {
+            position: absolute;
+            width: 100%;
+            height: 64px;
+            line-height: 64px;
+            text-align: center;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 
-<body class="container-fluid my-body">
+<body class="container-fluid">
     <div class="container-fluid header">
-        <nav class="container-fluid navigation">
+        <nav class="navbar navbar-expand-lg navigation">
             <div class="container-fluid mask"></div>
-
-            <div class="container-fluid auth">
-                <div class="auth-btn">
+            <div class="btn-group auth" role="group" aria-label="按钮组">
+                <button class="btn btn-auth">
                     登录
-                </div>
+                </button>
 
-                <div class="auth-btn">
+                <button class="btn btn-auth">
                     注册
-                </div>
+                </button>
             </div>
         </nav>
-        <p class="slogan">SHOW YOU & LIFE</p>
-        <div class="title">
-            <div>好友</div>
-            <div>我的</div>
+        <p class="container-fluid slogan">SHOW YOU & LIFE</p>
+        <div class="d-flex justify-content-center title-box">
+            <div class="d-inline title">首页</div>
+            <div class="d-inline title">好友</div>
+            <div class="d-inline title">我的</div>
         </div>
     </div>
 
-    <div class="content">
-        <div class="wp">
-            <div class="wp-card">
+    <div class="container-fluid content">
+        <div class="container-fluid wp">
+            <div class="card wp-card">
                 <div class="wp-card-info">
                     <div class="publisher">
                         发布者:你猜
@@ -109,7 +169,7 @@
                 </div>
             </div>
 
-            <div class="wp-card">
+            <div class="card wp-card">
                 <div class="wp-card-info">
                     <div class="publisher">
                         发布者:你猜
