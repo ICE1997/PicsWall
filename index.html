@@ -7,9 +7,12 @@
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.css">
+
     <script src="js/jquery-3.3.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/vue.js"></script>
 
     <style>
         * {
@@ -29,7 +32,7 @@
             padding: 0;
             width: 100%;
             height: 521px;
-            background-image: url("/head.jpg");
+            background-image: url("./img/head.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -88,7 +91,6 @@
             bottom: -32px;
             margin-left: 20%;
             margin-right: 20%;
-            text-align: center;
             background-color: rgba(255, 255, 255, 0.4);
             z-index: 99;
         }
@@ -105,12 +107,15 @@
             padding: 0;
             width: 80%;
             margin-left: 10%;
+            margin-left: 10%;
         }
 
         .wp {
             position: relative;
             margin: 0;
             padding: 0;
+            padding-top: 8px;
+            padding-bottom: 48px;
             background-color: rgba(255, 255, 255, 0.3);
         }
 
@@ -119,10 +124,12 @@
             height: 512px;
             width: 60%;
             margin: 0 auto;
-            margin-bottom: 48px;
-            background-image: url("./head1.jpg");
-            background-position: center;
-            background-repeat: no-repeat;
+            margin-top: 32px;
+        }
+
+        .wp .wp-card .wp-card-img {
+            width: 100%;
+            height: 100%;
         }
 
         .wp .wp-card .wp-card-info {
@@ -134,21 +141,40 @@
             bottom: 0;
             background-color: rgba(255, 255, 255, 0.4);
         }
+
+        .wp .wp-card .wp-card-info .like {
+            position: absolute;
+            display: inline-block;
+            left: 64px;
+            top: 0;
+        }
+
+        .wp .wp-card .wp-card-info .like .icon {
+            color: red;
+        }
+
+
+        .wp .wp-card .wp-card-info .like .p-num {
+            position: relative;
+            margin-left: 8px;
+        }
+
+        .foot {
+            position: relative;
+            height: 128px;
+            margin-top: 32px;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 
 <body class="container-fluid">
-    <div class="container-fluid header">
+    <header class="container-fluid header">
         <nav class="navbar navbar-expand-lg navigation">
             <div class="container-fluid mask"></div>
             <div class="btn-group auth" role="group" aria-label="按钮组">
-                <button class="btn btn-auth">
-                    登录
-                </button>
-
-                <button class="btn btn-auth">
-                    注册
-                </button>
+                <button class="btn btn-auth">登录</button>
+                <button class="btn btn-auth">注册</button>
             </div>
         </nav>
         <p class="container-fluid slogan">SHOW YOU & LIFE</p>
@@ -157,26 +183,74 @@
             <div class="d-inline title">好友</div>
             <div class="d-inline title">我的</div>
         </div>
-    </div>
+    </header>
 
-    <div class="container-fluid content">
-        <div class="container-fluid wp">
+    <section class="container-fluid content">
+        <section class="container-fluid wp" id="wp">
             <div class="card wp-card">
+                <img class="wp-card-img" src="./img/head1.jpg" alt="照片墙">
                 <div class="wp-card-info">
                     <div class="publisher">
                         发布者:你猜
+                    </div>
+                    <div class="like">
+                        <i class="fas fa-heart icon"></i>
+                        <span class="p-num">123人</span>
                     </div>
                 </div>
             </div>
 
             <div class="card wp-card">
+                <img class="wp-card-img" src="./img/head1.jpg" alt="照片墙">
                 <div class="wp-card-info">
                     <div class="publisher">
                         发布者:你猜
                     </div>
+                    <div class="like">
+                        <i class="fas fa-heart icon"></i>
+                        <span class="p-num">123人</span>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <wall-card></wall-card>
+        </section>
+    </section>
+
+    <footer class="foot" id="test">
+
+    </footer>
+
+    <script>
+        var cmpWallCard = {
+            data() {
+                return {
+                    test: 'test',
+                }
+            },
+            template: `
+            <div class="card wp-card">
+                <img class="wp-card-img" src="./img/head1.jpg" alt="照片墙">
+                <div class="wp-card-info">
+                    <div class="publisher">
+                        发布者:{{ test }}
+                    </div>
+                    <div class="like">
+                        <i class="fas fa-heart icon"></i>
+                        <span class="p-num">123人</span>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+
+        new Vue({
+            el: '#wp',
+            components: {
+                'wall-card':cmpWallCard
+            }
+        })
+    </script>
 </body>
 
 </html>
