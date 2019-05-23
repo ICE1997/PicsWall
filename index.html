@@ -20,7 +20,24 @@
         body {
             margin: 0 !important;
             padding: 0 !important;
-            background-color: rgb(216, 207, 196);
+            /* background-color: rgb(216, 207, 196); */
+            background-image: url("./bcgw.jpg");
+        }
+
+        body .go-top {
+            position: fixed;
+            display: block;
+            z-index: 99;
+            right: 3%;
+            bottom: 3%;
+            width: 64px;
+            height: 64px;
+            background-color: rgba(255, 255, 255, 0.4);
+            background-image: url("./top.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 60%;
+            border-radius: 50%;
         }
 
         .header {
@@ -29,7 +46,8 @@
             padding: 0;
             width: 100%;
             height: 521px;
-            background-image: url("/head.jpg");
+            /* background-image: url("/head.jpg"); */
+            /* background-image: url("./bcgw.jpg");  */
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
@@ -44,7 +62,7 @@
             position: absolute;
             left: 0;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 0, 0, 0.2);
         }
 
         .header .navigation .auth {
@@ -75,8 +93,9 @@
 
         .header .slogan {
             position: absolute;
-            color: #fff;
-            font-size: 64px;
+            color: white;
+            left: -35%;
+            font-size: 5rem;
             text-align: center;
             top: 50%;
         }
@@ -89,7 +108,7 @@
             margin-left: 20%;
             margin-right: 20%;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 0, 0, 0.3);
             z-index: 99;
         }
 
@@ -97,6 +116,7 @@
             position: relative;
             font-size: 24px;
             line-height: 64px;
+            color: white;
             margin: 0 auto;
         }
 
@@ -111,7 +131,7 @@
             position: relative;
             margin: 0;
             padding: 0;
-            background-color: rgba(255, 255, 255, 0.3);
+            /* background-color: rgba(255, 255, 255, 0.3); */
         }
 
         .wp .wp-card {
@@ -138,6 +158,7 @@
 </head>
 
 <body class="container-fluid">
+    <a class="go-top" href="#top"></a>
     <div class="container-fluid header">
         <nav class="navbar navbar-expand-lg navigation">
             <div class="container-fluid mask"></div>
@@ -151,7 +172,7 @@
                 </button>
             </div>
         </nav>
-        <p class="container-fluid slogan">SHOW YOU & LIFE</p>
+        <p class="container-fluid slogan">Old Days</p>
         <div class="d-flex justify-content-center title-box">
             <div class="d-inline title">首页</div>
             <div class="d-inline title">好友</div>
