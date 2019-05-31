@@ -21,6 +21,5 @@ export default {
   margin-left: 10%;
   margin-left: 10%;
 }
-
 </style>
 

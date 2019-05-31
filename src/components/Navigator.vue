@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navigation">
     <div class="container-fluid mask"></div>
-    <div v-if="login" class="btn-group auth" role="group" aria-label="按钮组">
+    <div v-if="!login" class="btn-group auth" role="group" aria-label="按钮组">
       <button class="btn btn-auth">登录</button>
       <button class="btn btn-auth">注册</button>
     </div>
@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      login:true
+      login:false
     }
   },
 }

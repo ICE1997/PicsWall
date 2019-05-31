@@ -4,7 +4,7 @@
     <div class="wp-card-info">
       <div class="publisher">发布者:{{ author }}</div>
       <div class="like">
-        <font-awesome-icon icon="heart" class="icon"/>
+        <font-awesome-icon v-on:click="changeColor" icon="heart" class="icon"/>
         <span class="p-num">{{ likes }}人</span>
       </div>
     </div>
@@ -12,9 +12,36 @@
 </template>
 
 <script>
-import '@fortawesome/fontawesome-free'
+import "@fortawesome/fontawesome-free";
 export default {
-  props: ["author", "likes", "src", "alt"]
+  props: ["author", "likes", "src", "alt"],
+  data: function() {
+    return{
+      clicked: 0
+    }
+  },
+  methods: {
+    changeColor: function(e) {
+      if(this.clicked === 0) {
+      let likeIcon = e.target;
+      switch(likeIcon.tagName) {
+        case 'svg':
+          likeIcon.style.color = 'black';
+          break;
+        case 'path':
+          likeIcon.parentElement.style.color = 'black';
+          break;
+        default:
+      }
+      this.likes++;
+      this.clicked = 1;
+      console.log(likeIcon);
+      }else {
+        alert("已赞!");
+      }
+
+    }
+  }
 };
 </script>
 
@@ -28,8 +55,8 @@ export default {
 }
 
 .wp-card .wp-card-img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .wp-card .wp-card-info {
@@ -51,6 +78,7 @@ export default {
 
 .wp-card .wp-card-info .like .icon {
   color: red;
+  transition: all 0.5s;
 }
 
 .wp-card .wp-card-info .like .p-num {

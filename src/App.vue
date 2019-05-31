@@ -12,13 +12,15 @@ import mHeader from "./components/Header.vue";
 import mContent from "./components/Content.vue";
 import mGoTop from "./components/GoTop.vue";
 import mFooter from "./components/Footer.vue";
+import mLogin from "./components/Login.vue";
 export default {
   name: "App",
   components: {
     mHeader,
     mContent,
     mGoTop,
-    mFooter
+    mFooter,
+    mLogin
   }
 };
 </script>

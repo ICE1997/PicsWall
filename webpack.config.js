@@ -1,10 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -28,9 +28,10 @@ module.exports = {
             "windows.jQuery": "jquery"
 
         }),
-
-        new VueLoaderPlugin()
-
+        new VueLoaderPlugin(),
+        new HtmlWebpackPlugin({
+            template: "./index.html"
+        })
     ],
 
     module: {

@@ -2,7 +2,7 @@
   <header class="container-fluid header" id="mHeader">
     <m-nav/>
     <p class="container-fluid slogan">Old Days</p>
-    <div class="d-flex justify-content-center title-box">
+    <div v-if="login" class="d-flex justify-content-center title-box">
       <div class="d-inline title">首页</div>
       <div class="d-inline title">好友</div>
       <div class="d-inline title">我的</div>
@@ -14,6 +14,11 @@
 import mNav from "./Navigator.vue";
 
 export default {
+  data:function(){
+    return {
+      login:true
+    }
+  },
   components: {
     mNav
   }
