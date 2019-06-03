@@ -1,14 +1,13 @@
 <template>
-  <div class="card wp-card">
-    <img class="wp-card-img" :src="src" :alt="alt">
-    <div class="wp-card-info">
+  <b-container class="wp-card">
+    <b-container class="wp-card-info">
       <div class="publisher">发布者:{{ author }}</div>
       <div class="like">
         <font-awesome-icon v-on:click="changeColor" icon="heart" class="icon"/>
         <span class="p-num">{{ likes }}人</span>
       </div>
-    </div>
-  </div>
+    </b-container>
+  </b-container>
 </template>
 
 <script>
@@ -17,7 +16,16 @@ export default {
   props: ["author", "likes", "src", "alt"],
   data: function() {
     return{
-      clicked: 0
+      clicked: 0,
+      mainProps: {
+          center: true,
+          fluidGrow: true,
+          blank: true,
+          blankColor: '#bbb',
+          width: 600,
+          height: 400,
+          class: 'my-5'
+        }
     }
   },
   methods: {
@@ -48,22 +56,21 @@ export default {
 <style scoped>
 .wp-card {
   position: relative;
-  height: 512px;
-  width: 50%;
-  margin: 0 auto;
-  margin-top: 32px;
-}
+  height: 540px;
+  width: 960px;
+  /* width: 960px; */
+  /* margin: 0 auto; */
 
-.wp-card .wp-card-img {
-  width: 100%;
-  height: 100%;
+  margin: 0 auto;
+margin-top: 32px;
+  background-color: #fff;
 }
 
 .wp-card .wp-card-info {
   position: absolute;
-  width: 100%;
   height: 64px;
   line-height: 64px;
+  margin: 0 -15px;
   text-align: center;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.4);
@@ -72,7 +79,7 @@ export default {
 .wp-card .wp-card-info .like {
   position: absolute;
   display: inline-block;
-  left: 64px;
+  left: 5%;
   top: 0;
 }
 
@@ -81,7 +88,7 @@ export default {
   transition: all 0.5s;
 }
 
-.wp-card .wp-card-info .like .p-num {
+.wp-card .wp-card-info   .like .p-num {
   position: relative;
   margin-left: 8px;
 }

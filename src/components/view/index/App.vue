@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import mHeader from "./components/Header.vue";
-import mContent from "./components/Content.vue";
-import mGoTop from "./components/GoTop.vue";
-import mFooter from "./components/Footer.vue";
-import mLogin from "./components/Login.vue";
+import mHeader from "./Header.vue";
+import mContent from "./Content.vue";
+import mGoTop from "./GoTop.vue";
+import mFooter from "./Footer.vue";
+import mLogin from "./Login.vue";
 export default {
   name: "App",
   components: {
@@ -24,6 +24,13 @@ export default {
   }
 };
 </script>
+
+<style>
+*{
+  margin: 0;
+  padding: 0;
+}
+</style>
 
 <style scoped>
 #app {

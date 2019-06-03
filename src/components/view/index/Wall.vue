@@ -1,5 +1,5 @@
 <template>
-  <section class="container-fluid wp">
+  <div class= "wp">
     <wall-card
       v-for="publisher in publishers"
       :key="publisher.id"
@@ -8,7 +8,7 @@
       :src="publisher.bcp"
       :alt="publisher.name"
     ></wall-card>
-  </section>
+  </div>
 </template>
 
 
@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .wp {
   position: relative;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   padding-top: 8px;
   padding-bottom: 48px;

@@ -1,14 +1,32 @@
-const path = require('path')
-const webpack = require('webpack')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
     mode: 'development',
-    entry: './src/main.js',
+    entry: {
+        index: './src/index.js',
+        editor: './src/editor.js'
+    },
+
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: "main.js"
+        filename: '[name].[contenthash].js'
+    },
+
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
+        }
     },
 
     resolve: {
@@ -18,19 +36,20 @@ module.exports = {
     },
 
     plugins: [
-
-        new webpack.ProvidePlugin({
-
-            $: "jquery",
-
-            jQuery: "jquery",
-
-            "windows.jQuery": "jquery"
-
-        }),
         new VueLoaderPlugin(),
+        new CleanWebpackPlugin(),
+        new webpack.HashedModuleIdsPlugin(),
         new HtmlWebpackPlugin({
-            template: "./index.html"
+            filename: 'index.html',
+            template: './src/html/template/index.html',
+            chunks: ['vendors', 'index', 'runtime'],
+            title: '首页'
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'editor.html',
+            template: './src/html/template/index.html',
+            title: '编辑器',
+            chunks: ['vendors', 'editor', 'runtime']
         })
     ],
 
