@@ -1,5 +1,5 @@
 <template>
-  <div class= "wp">
+  <div  class="wp">
     <wall-card
       v-for="publisher in publishers"
       :key="publisher.id"
@@ -52,12 +52,50 @@ export default {
           likes: "66333",
           bcp: "/src/img/head.jpg",
           name: "背景图"
+        },
+        {
+          id: 6,
+          author: "你才",
+          likes: "66333",
+          bcp: "/src/img/head.jpg",
+          name: "背景图"
         }
       ]
     };
   },
+  watch: {
+ 
+  },
+  computed: {
+
+  },
   components: {
     WallCard
+  },
+  mounted: function() {
+
+  },
+  methods:{
+      ig: function() {
+        let t = this;
+        let r;
+        let content = { "imgpath": "uploads\\img-1559654220746.jpg" };
+        fetch("http://192.168.77.16:3000/load/img", {
+          method:'post',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(content)
+        }).then(response=>response.blob()).then((data)=>{
+          console.log(data);
+          let reader = new FileReader();
+          reader.readAsDataURL(data);
+          reader.onload = function(e) {
+            console.log("OK" + this.result);
+          }
+        })
+        return r;
+      },
   }
 };
 </script>
