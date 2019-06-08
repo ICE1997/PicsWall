@@ -1,24 +1,59 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="mBlack">
-    <b-navbar-brand href="#">Moments</b-navbar-brand>
+  <b-navbar toggleable="lg" type="mdark" variant="mBlack">
+    <b-navbar-brand  href="#">Moments</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav v-if="!login" class="ml-auto">
-         <b-nav-item >登录</b-nav-item>
-         <b-nav-item >注册</b-nav-item>
+      <b-navbar-nav v-if="!logined" class="ml-auto">
+        <b-nav-item v-b-modal.modal-center-login>登录</b-nav-item>
+        <b-modal id="modal-center-login" centered title="登录">
+          <p class="my-4">这是登录弹窗</p>
+        </b-modal>
+        <b-nav-item v-b-modal.modal-center-signup>注册</b-nav-item>
+        <b-modal id="modal-center-signup" centered title="注册">
+          <p class="my-4">这是注册弹窗</p>
+        </b-modal>
       </b-navbar-nav>
-      <b-navbar-nav v-else class="auth">Haha</b-navbar-nav>
+      <b-navbar-nav v-else class="ml-auto">
+        <b-nav-text style="color:white;">Hello!</b-nav-text>
+        <b-nav-item-dropdown id="auth-nav-dropdown" :text="user" right>
+          <b-dropdown-item>个人信息</b-dropdown-item>
+          <b-dropdown-item @click="logout">注销</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
     </b-collapse>
+    <button @click="login"></button>
   </b-navbar>
 </template>
 
 
 <<script>
+import {mapState,mapActions} from 'vuex'
+
 export default {
   data() {
     return {
-      login:false
+      user:"ICE"
     }
+  },
+  computed: {
+    ...mapState({
+      logined: state=>state.user.logined
+    })
+  },
+  methods: {
+    ...mapActions('user',['logout']),
+    login() {
+      console.log('hah');
+      let userinfo  = {
+        username:'1',
+        password:'1'
+      }
+      this.$store.dispatch('user/login',userinfo);
+      console.log("qaf");
+    }
+  },
+  mounted() {
+    
   },
 }
 
@@ -44,6 +79,57 @@ export default {
 .show > .btn-auth.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(245, 47, 47, 0.5);
 }
+
+.navbar-mdark .navbar-brand {
+  color: #fff;
+}
+
+.navbar-mdark .navbar-brand:hover,
+.navbar-mdark .navbar-brand:focus {
+  color: #fff;
+}
+
+.navbar-mdark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+}
+
+.navbar-mdark .navbar-nav .nav-link:hover,
+.navbar-mdark .navbar-nav .nav-link:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar-mdark .navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.navbar-mdark .navbar-nav .show > .nav-link,
+.navbar-mdark .navbar-nav .active > .nav-link,
+.navbar-mdark .navbar-nav .nav-link.show,
+.navbar-mdark .navbar-nav .nav-link.active {
+  color: #fff;
+}
+
+.navbar-mdark .navbar-toggler {
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-mdark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-mdark .navbar-text {
+  color: rgba(255, 255, 255, 1);
+}
+
+.navbar-mdark .navbar-text a {
+  color: #fff;
+}
+
+.navbar-mdark .navbar-text a:hover,
+.navbar-mdark .navbar-text a:focus {
+  color: #fff;
+}
 </style>
 
 <style scoped>
@@ -51,12 +137,12 @@ export default {
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
-a{
+a {
   color: rgba(255, 255, 255, 1) !important;
 }
 
 a:hover,
-a:focus{
+a:focus {
   color: rgba(255, 255, 255, 0.75) !important;
 }
 </style>

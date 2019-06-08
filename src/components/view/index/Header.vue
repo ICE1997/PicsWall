@@ -2,25 +2,31 @@
   <header class="container-fluid header" id="mHeader">
     <m-nav/>
     <p class="container-fluid slogan">Old Days</p>
-    <b-nav v-if="login" class="d-flex justify-content-center align-items-center title-box">
+    <b-nav  class="d-flex justify-content-center align-items-center title-box">
       <b-nav-item class="title">首页</b-nav-item>
-      <b-nav-item class="title">好友</b-nav-item>
-      <b-nav-item class="title">我的</b-nav-item>
+      <b-nav-item v-if="logined" class="title">关注</b-nav-item>
+      <b-nav-item class="title">公共墙</b-nav-item>
+      <b-nav-item v-if="logined" class="title">我的</b-nav-item>
     </b-nav>
   </header>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import mNav from "./Navigator.vue";
 
 export default {
   data: function() {
     return {
-      login: true
     };
   },
   components: {
     mNav
+  },
+  computed: {
+    ...mapState({
+      logined: state=>state.user.logined
+    })
   }
 };
 </script>

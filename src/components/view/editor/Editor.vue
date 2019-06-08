@@ -22,71 +22,219 @@
                 id="addToSingle"
                 ref="addToSingle"
               >导入</b-button>
-              <b-button pill variant="outline-secondary" class="inTool" id="rotate" ref="rotate">旋转</b-button>
-              <b-button pill variant="outline-secondary" class="inTool" id="scale" ref="scale">缩放</b-button>
             </b-col>
           </b-row>
         </b-row>
       </b-col>
 
       <b-col cols="3" class="picMaterialModule">
-        <section class="mBackground">
-          <header class="title">
-            <div>背景</div>
-          </header>
-          <section class="bcgBox" id="bcgBox" ref="bcgBox">
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-            <div class="bcg"></div>
-          </section>
-        </section>
-
-        <section class="userMaterial">
-          <header class="title">
-            <div>素材</div>
-          </header>
-
-          <section class="picsBox" id="picsBox" ref="picsBox">
-            <div class="pic"></div>
-          </section>
-          <div class="addPic" id="addPic" ref="addPic">
-            +
-            <input id="picSelector" ref="picSelector" class="picSelector" type="file" multiple>
-          </div>
-        </section>
+        <MaterialContainer :id="mt[0].id" :type="mt[0].type" :dataSet="bcgSource"/>
+        <MaterialContainer :id="mt[1].id" :type="mt[1].type" :dataSet="picSource"/>
+        <div class="addPic" id="addPic" @click="getfiles" ref="addPic">
+          +
+          <input
+            id="picSelector"
+            ref="picSelector"
+            class="picSelector"
+            @change="readFile"
+            type="file"
+            multiple
+          >
+        </div>
       </b-col>
-
       <b-col cols="3" class="decorationsModule">
-        <section class="mBorder">
-          <header class="title">
-            <div>边框</div>
-          </header>
-          <section class="borderBox" id="borderBox">
-            <div class="mbd"></div>
-          </section>
-        </section>
-
-        <section class="hangings">
-          <header class="title">
-            <div>悬挂</div>
-          </header>
-          <section class="hangingsBox" id="hangingsBox">
-            <div class="hanging"></div>
-          </section>
-        </section>
+        <MaterialContainer :id="mt[2].id" :type="mt[2].type" :dataSet="borderSource"/>
+        <MaterialContainer :id="mt[3].id" :type="mt[3].type" :dataSet="hangingSource"/>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
+
+<script>
+import MaterialContainer from "./MaterialContainer.vue";
+export default {
+  name: "editor",
+  components: {
+    MaterialContainer
+  },
+  data() {
+    return {
+      mt: [
+        {
+          id: "bcgsBox",
+          type: "背景"
+        },
+        {
+          id: "picsBox",
+          type: "素材"
+        },
+        {
+          id: "bordersBox",
+          type: "边框"
+        },
+        {
+          id: "hangingsBox",
+          type: "悬挂"
+        }
+      ],
+      picSource: [
+        {
+          id: "ps0",
+          s: "/src/img/brink.jpg"
+        },
+        {
+          id: "ps1",
+          s: "/src/img/green.jpg"
+        },
+        {
+          id: "ps2",
+          s: "/src/img/chalkboard.jpg"
+        }
+      ],
+      borderSource: [
+        {
+          id: "bs0",
+          s: "/src/img/brink.jpg"
+        },
+        {
+          id: "bs1",
+          s: "/src/img/green.jpg"
+        },
+        {
+          id: "bs2",
+          s: "/src/img/chalkboard.jpg"
+        }
+      ],
+      bcgSource: [
+        {
+          id: "bcgs0",
+          s: "/src/img/brink.jpg"
+        },
+        {
+          id: "bcgs1",
+          s: "/src/img/green.jpg"
+        },
+        {
+          id: "bcgs2",
+          s: "/src/img/chalkboard.jpg"
+        }
+      ],
+      hangingSource: [
+        {
+          id: "hs0",
+          s: "/src/img/brink.jpg"
+        },
+        {
+          id: "hs1",
+          s: "/src/img/green.jpg"
+        },
+        {
+          id: "hs2",
+          s: "/src/img/chalkboard.jpg"
+        }
+      ]
+    };
+  },
+
+  watch: {
+    picSource: function(o, n) {
+      console.log("changed!");
+    }
+  },
+  methods: {
+    getfiles: function() {
+      this.$refs.picSelector.click();
+    },
+    readFile: function() {
+      let ps = document.getElementById("picSelector");
+      let t = this;
+      //获取并加载图片
+      let fLen = ps.files.length;
+      for (let i = 0; i < fLen; i++) {
+        if (ps.files[i].name.match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {
+          //通过正则选出后缀是照片后缀的文件，i是ignore的意思，用于忽略大小写。但这并不完美，当文件为xxx.jpg.html时，也会匹配到
+          let reader = new FileReader();
+          reader.readAsDataURL(ps.files[i]);
+          // reader.fileName = ps.files[i].name;
+          reader.onload = function(e) {
+            let picTemp = {
+              id: "ps" + t.picSource.length,
+              s: this.result
+            };
+            t.picSource.push(picTemp);
+          };
+        }
+      }
+    },
+    initEditor() {
+      console.log("???");
+      let outer = window.document.getElementById("picEditorOuter");
+      let canvas = new fabric.Canvas("picEditor");
+      canvas.setHeight(400);
+      canvas.setWidth(400);
+      canvas.renderAll();
+    },
+  },
+
+  computed: {},
+
+  mounted() {
+    this.initEditor();
+  }
+};
+</script>
+
+
 <style>
+.rotateIn-enter-active {
+  animation: rotateIn 1s;
+}
+.rotateIn-leave-active {
+  animation: rotateIn 0.5s reverse;
+}
+
+@-webkit-keyframes rotateIn {
+  from {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, -200deg);
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, -200deg);
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.rotateIn {
+  -webkit-animation-name: rotateIn;
+  animation-name: rotateIn;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -111,6 +259,7 @@
   width: 100%;
   color: white;
   border-bottom: 0.5px solid #d8d8d8;
+  border-top: 0.5px solid #d8d8d8;
 }
 
 .title div {
@@ -192,8 +341,6 @@
   position: relative;
   width: 100%;
   height: 50%;
-  /* background-color: #fff; */
-  /* border-top: 0.5px solid #d8d8d8; */
 }
 
 .picEditorModule .row {
@@ -219,7 +366,6 @@
   border-left: 0.5px solid #d8d8d8;
   padding: 0 !important;
   text-align: center;
-  /* background-color: #fff; */
 }
 
 .inTool {
@@ -247,93 +393,6 @@
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
 }
 
-.mBackground {
-  height: 50%;
-  border-bottom: 0.5px solid #d8d8d8;
-}
-
-.bcgBox {
-  position: relative;
-  width: 100%;
-  height: 80%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-}
-
-.bcg {
-  position: relative;
-  display: inline-block;
-  background-color: #fff;
-  width: 25%;
-  height: 0;
-  padding-bottom: 12.5%;
-  border-radius: 8px;
-  overflow: hidden;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-image: url("/src/img/brink.jpg");
-  margin-top: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-/* .bcg:focus,
-.bcg.focus {
-border: 1px solid blue;
-}
-
-.bcg:not(:disabled):not(.disabled):active:focus,
-.bcg:not(:disabled):not(.disabled).active:focus,
-.show > .inTool.dropdown-toggle:focus {
-  background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.2);
-} */
-
-/* .bcg:active,.bcg:focus {
-  border: 1px solid blue;
-} */
-
-.userMaterial {
-  height: 50%;
-}
-
-.picsBox {
-  position: relative;
-  width: 100%;
-  height: 80%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-}
-
-.pic {
-  position: relative;
-  display: inline-block;
-  background-color: #fff;
-  width: 25%;
-  height: 0;
-  padding-bottom: 12.5%;
-  border-radius: 8px;
-  overflow: hidden;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-image: url("/src/img/brink.jpg");
-  margin-top: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
 .addPic {
   position: absolute;
   z-index: 99;
@@ -354,122 +413,7 @@ border: 1px solid blue;
   position: absolute;
   display: none;
 }
-
-.mBorder {
-  display: inline-block;
-  height: 50%;
-  width: 100%;
-  border-bottom: 0.5px solid #d8d8d8;
-}
-
-.borderBox {
-  position: relative;
-  width: 100%;
-  height: 80%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-}
-
-.mbd {
-  position: relative;
-  display: inline-block;
-  background-color: #fff;
-  width: 25%;
-  height: 0;
-  padding-bottom: 12.5%;
-  border-radius: 8px;
-  overflow: hidden;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-image: url("/src/img/white.jpg");
-  margin-top: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.hangings {
-  display: inline-block;
-  height: 50%;
-  width: 100%;
-}
-
-.hangingsBox {
-  position: relative;
-  width: 100%;
-  height: 80%;
-  margin-top: 5%;
-  margin-bottom: 5%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-align: center;
-}
-
-.hanging {
-  position: relative;
-  display: inline-block;
-  background-color: #fff;
-  width: 25%;
-  height: 0;
-  padding-bottom: 12.5%;
-  border-radius: 8px;
-  overflow: hidden;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-image: url("/src/img/brink.jpg");
-  margin-top: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
-}
 </style>
 
-<script>
-export default {
-  name: "editor",
-  data() {
-    return {
-      picsSource: []
-    };
-  },
 
-  methods: {},
-
-  computed: {},
-
-  mounted() {
-    console.log("???");
-    let outer = window.document.getElementById("picEditorOuter");
-    let canvas = new fabric.Canvas("picEditor");
-    canvas.setHeight(400);
-    canvas.setWidth(400);
-    canvas.renderAll();
-
-    var rect = new fabric.Rect({
-      left: 100,
-      top: 50,
-      fill: "#D81B60",
-      width: 50,
-      height: 50,
-      strokeWidth: 2,
-      stroke: "#880E4F",
-      rx: 10,
-      ry: 10,
-      angle: 45,
-      scaleX: 3,
-      scaleY: 3,
-      hasControls: true
-    });
-
-    canvas.add(rect);
-  }
-};
-</script>
 

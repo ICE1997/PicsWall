@@ -9,6 +9,5 @@ Vue.use(BootstrapVue);
 
 new Vue({
     el: '#app',
-    components: { Editor },
-    template: '<Editor/>'
+    render: h => h(Editor)
 })
