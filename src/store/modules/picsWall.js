@@ -2,33 +2,79 @@ import axios from "axios";
 import { SERVER } from '../../config/config.js'
 
 const state = {
-    publishers: []
+    walls: []
 }
 
 const actions = {
-    loadPublishers({ commit }) {
-        commit('getAllPublishers');
+    loadWalls({ commit }) {
+        commit('getAllWalls');
+    },
+    like({ commit }, wallid) {
+        axios({
+            method: "post",
+            url: SERVER + "/upload/updatesupport",
+            data: {
+                id: wallid,
+                flag: 1
+            }
+        }).then(function(response) {
+            let likes = response.data.data.supportnum;
+            let payload = {
+                id: wallid,
+                likes: likes
+            }
+            commit("updatelikes", payload);
+        })
+    },
+    dislike({ commit }, wallid) {
+        axios({
+            method: "post",
+            url: SERVER + "/upload/updatesupport",
+            data: {
+                id: wallid,
+                flag: 0
+            }
+        }).then(function(response) {
+            let likes = response.data.data.supportnum;
+            let payload = {
+                id: wallid,
+                likes: likes
+            }
+            commit("updatelikes", payload);
+        })
     }
 }
 
 const mutations = {
-    getAllPublishers(state) {
+    getAllWalls(state) {
         axios.post(SERVER + '/info/userinfo').then(function(response) {
-            console.log(response);
-            let imgPaths = response["data"]["data"]["0"]["imgpath"];
-            for (let imgPath in imgPaths) {
-                console.log(imgPaths[imgPath]);
+            let walls = response["data"]["data"];
+            for (let index in walls) {
+                let wall = walls[index];
                 let temp = {
-                    id: state.publishers.length,
-                    author: "你才",
-                    likes: "66333",
-                    bcp: SERVER + "/" + imgPaths[imgPath],
-                    name: "背景图"
+                    id: wall._id,
+                    author: wall.username,
+                    likes: wall.supportnum,
+                    wallJSON: wall.imgpath,
                 };
-                state.publishers.push(temp);
+                state.walls.push(temp);
             }
-            console.log(state.publishers);
         })
+    },
+    updatelikes(state, payload) {
+        let i = -1;
+        for (let wall in state.walls) {
+            let twall = state.walls[wall];
+            if (twall.id == payload.id) {
+                i = wall;
+                break;
+            }
+        }
+        if (i != -1) {
+            state.walls[i].likes = payload.likes;
+        } else {
+            console.log("赞/取消赞失败...");
+        }
     }
 }
 

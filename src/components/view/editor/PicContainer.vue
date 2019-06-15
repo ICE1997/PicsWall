@@ -1,11 +1,16 @@
 <template>
-  <div :style="{backgroundImage:'url(' + url + ')'}" class="pic-container"></div>
+  <div draggable="true" @dragstart="drag" :style="{backgroundImage:'url(' + url + ')'}" class="pic-container"></div>
 </template>
 
 <script>
 export default {
   props: {
       url:String
+  },
+  methods:{
+    drag:function(e) {
+      e.dataTransfer.setData("text/plain",e.target.style.backgroundImage);
+    }
   }
 };
 </script>

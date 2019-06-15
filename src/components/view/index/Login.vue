@@ -1,84 +1,91 @@
 <template>
-  <div>
-    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
-
-    <div class="mt-3">
-      Submitted Names:
-      <div v-if="submittedNames.length === 0">--</div>
-      <ul v-else class="mb-0 pl-3">
-        <li v-for="(name,index) in submittedNames" :key="index">{{ name }}</li>
-      </ul>
-    </div>
-
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="Submit Your Name"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group
-          :state="nameState"
-          label="Name"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            v-model="name"
-            :state="nameState"
-            required
-          ></b-form-input>
-        </b-form-group>
-      </form>
-    </b-modal>
-  </div>
+  <b-container class="main">
+    <b-alert
+      :variant="style"
+      dismissible
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged"
+      :show="dismissCountDown"
+    >{{alertText}}</b-alert>
+    <b-form>
+      <b-form-group label="用户名" label-for="inputUsername">
+        <b-form-input id="loginInputUsername" v-model="loginUsername" trim></b-form-input>
+      </b-form-group>
+      <b-form-group label="密码" label-for="loginInputPsw">
+        <b-form-input id="loginInputPsw" v-model="loginPassword" type="password" trim></b-form-input>
+      </b-form-group>
+      <b-container class="btns">
+        <b-row align-h="end">
+          <b-col cols="12">
+            <b-button @click="login" block variant="primary">登录</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-form>
+  </b-container>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        name: '',
-        nameState: null,
-        submittedNames: []
-      }
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {
+      dismissCountDown: 0,
+      dismissSecs: 2,
+      style: "",
+      alertText: "",
+
+      loginUsername: "",
+      loginPassword: ""
+    };
+  },
+  methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
-    methods: {
-      checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.nameState = valid ? 'valid' : 'invalid'
-        return valid
-      },
-      resetModal() {
-        this.name = ''
-        this.nameState = null
-      },
-      handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.handleSubmit()
-      },
-      handleSubmit() {
-        // Exit when the form isn't valid
-        if (!this.checkFormValidity()) {
-          return
+    showAlert(type, text) {
+      this.dismissCountDown = this.dismissSecs;
+      this.style = type;
+      this.alertText = text;
+    },
+    login() {
+      this.loginUserNameState = "";
+      this.loginPSWState = "";
+      let loginInfo = {
+        username: this.loginUsername,
+        password: this.loginPassword
+      };
+      this.$store.dispatch("user/login", loginInfo).then(() => {
+        let succeed = this.loginState.succeed;
+        let code = this.loginState.responseCode;
+        if (!succeed) {
+          this.showAlert("danger", "密码或账户错误!");
+        } else {
+          console.log("登录成功!");   
         }
-        // Push the name to submitted names
-        this.submittedNames.push(this.name)
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$refs.modal.hide()
-        })
-      }
+      });
     }
+  },
+  computed: {
+    ...mapState("user", ["loginState"])
   }
+};
 </script>
 
-<style scoped>
 
+<style>
+.btns {
+  text-align: center;
+}
+
+.btns button {
+  padding: 8px 16px;
+}
+</style>
+
+<style scoped>
+.main {
+  width: 70%;
+}
 </style>
 

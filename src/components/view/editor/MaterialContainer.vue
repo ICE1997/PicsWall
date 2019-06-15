@@ -1,5 +1,5 @@
 <template>
-  <section @dblclick="selectPic" class="material-container">
+  <section class="material-container">
     <header class="title">
       <div>{{type}}</div>
     </header>
@@ -13,12 +13,10 @@
 
 <script>
 import PicContainer from "./PicContainer.vue";
-
+import { mapState,mapActions } from "vuex";
 export default {
-  dataa() {
+  data() {
     return {
-      selectedEl: "",
-      selectedBcg:''
     };
   },
   props: {
@@ -31,23 +29,6 @@ export default {
   },
   computed: {},
   methods: {
-    selectPic: function(e) {
-      if (this.selectedEl != undefined) {
-        this.selectedEl.style.border = "";
-      }
-      e.target.style.border = "2px solid white";
-      this.selectedEl = e.target;
-
-      switch(this.selectedEl.parentNode.parentNode.id){
-        case 'bcgsBox':
-          console.log("this is bcgBox");
-          break;
-      }
-      
-
-      console.log("dont click me!" + e.target.style.backgroundImage);
-      // console.log(e);
-    }
   }
 };
 </script>

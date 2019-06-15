@@ -13,6 +13,7 @@ import mContent from "./Content.vue";
 import mGoTop from "./GoTop.vue";
 import mFooter from "./Footer.vue";
 import mLogin from "./Login.vue";
+import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
@@ -21,6 +22,10 @@ export default {
     mGoTop,
     mFooter,
     mLogin
+  },
+  computed: {},
+  mounted() {
+    this.$store.dispatch("user/init");
   }
 };
 </script>
@@ -34,7 +39,9 @@ export default {
 
 <style scoped>
 #app {
-  background-image: url("/src/img/wall.jpg");
+  background-image: url("/dist/img/wall.jpg");
+  background-repeat: repeat;
+  background-size: 70%;
 }
 </style>
 

@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -13,7 +15,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[contenthash].js'
+        filename: './js/[name].[contenthash].js'
     },
 
     optimization: {
@@ -24,7 +26,13 @@ module.exports = {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
                     chunks: 'all'
-                }
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true,
+                },
             }
         }
     },
@@ -39,6 +47,10 @@ module.exports = {
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
         new webpack.HashedModuleIdsPlugin(),
+        new CopyWebpackPlugin([{
+            from: __dirname + '/src/img',
+            to: __dirname + '/dist/img'
+        }]),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/html/template/index.html',
@@ -50,26 +62,43 @@ module.exports = {
             template: './src/html/template/index.html',
             title: '编辑器',
             chunks: ['vendors', 'editor', 'runtime']
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: './css/[name].css',
+        }),
     ],
 
     module: {
         rules: [{
-            test: /\.js$/,
-            loader: "babel-loader",
-            exclude: /node_modules/
-        }, {
-            test: /\.css$/,
-            loader: 'style-loader!css-loader'
-        }, {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 10000
+                test: /\.js$/,
+                loader: "babel-loader",
+                exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                use: [{
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                            hmr: process.env.NODE_ENV === 'development',
+                        },
+                    },
+                    'css-loader',
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: '[name].[hash:7].[ext]',
+                    outputPath: '/dist/img',
+                }
+            }, {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
-        }, {
-            test: /\.vue$/,
-            loader: 'vue-loader'
-        }]
+        ]
     }
 }

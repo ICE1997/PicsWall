@@ -4,7 +4,10 @@
       <b-col cols="6" class="previewModule">
         <b-row class="picsWallPreviewModule">
           <section class="picsWallPreviewMain">
-            <div class="picsWallPreview"></div>
+            <canvas
+              id="wallPreview"
+              class="picsWallPreview"
+            ></canvas>
           </section>
         </b-row>
 
@@ -21,7 +24,27 @@
                 class="inTool"
                 id="addToSingle"
                 ref="addToSingle"
-              >导入</b-button>
+                @click="group"
+              >组合</b-button>
+              <b-button
+                pill
+                variant="outline-secondary"
+                class="inTool"
+                id="setBcgBtn"
+                @click="setAsBcg"
+              >设置背景</b-button>
+
+              <b-button
+                pill
+                variant="outline-secondary"
+                class="inTool"
+                id="addTextBtn"
+                @click="addText"
+              >文字</b-button>
+
+              <b-button pill variant="outline-secondary" class="inTool" @click="rmEl">删除</b-button>
+
+              <b-button pill variant="outline-secondary" class="inTool" @click="saveCanvas">保存</b-button>
             </b-col>
           </b-row>
         </b-row>
@@ -53,6 +76,8 @@
 
 <script>
 import MaterialContainer from "./MaterialContainer.vue";
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "editor",
   components: {
@@ -60,92 +85,102 @@ export default {
   },
   data() {
     return {
-      mt: [
-        {
-          id: "bcgsBox",
-          type: "背景"
-        },
-        {
-          id: "picsBox",
-          type: "素材"
-        },
-        {
-          id: "bordersBox",
-          type: "边框"
-        },
-        {
-          id: "hangingsBox",
-          type: "悬挂"
-        }
-      ],
-      picSource: [
-        {
-          id: "ps0",
-          s: "/src/img/brink.jpg"
-        },
-        {
-          id: "ps1",
-          s: "/src/img/green.jpg"
-        },
-        {
-          id: "ps2",
-          s: "/src/img/chalkboard.jpg"
-        }
-      ],
-      borderSource: [
-        {
-          id: "bs0",
-          s: "/src/img/brink.jpg"
-        },
-        {
-          id: "bs1",
-          s: "/src/img/green.jpg"
-        },
-        {
-          id: "bs2",
-          s: "/src/img/chalkboard.jpg"
-        }
-      ],
-      bcgSource: [
-        {
-          id: "bcgs0",
-          s: "/src/img/brink.jpg"
-        },
-        {
-          id: "bcgs1",
-          s: "/src/img/green.jpg"
-        },
-        {
-          id: "bcgs2",
-          s: "/src/img/chalkboard.jpg"
-        }
-      ],
-      hangingSource: [
-        {
-          id: "hs0",
-          s: "/src/img/brink.jpg"
-        },
-        {
-          id: "hs1",
-          s: "/src/img/green.jpg"
-        },
-        {
-          id: "hs2",
-          s: "/src/img/chalkboard.jpg"
-        }
-      ]
+      mcs: ""
     };
   },
-
-  watch: {
-    picSource: function(o, n) {
-      console.log("changed!");
-    }
+  computed: {
+    ...mapState("editor", [
+      "mt",
+      "picSource",
+      "borderSource",
+      "bcgSource",
+      "hangingSource"
+    ])
   },
+  watch: {},
   methods: {
+    /**
+     * 保存canvas的json，以便复原
+     */
+    saveCanvas: function() {
+      let c = this.mcs;
+      this.$store.dispatch("editor/save", JSON.stringify(c));
+    },
+    /**
+     * 删除被选择的元素
+     */
+    rmEl: function() {
+      let c = this.mcs;
+      let aobj = c.getActiveObject();
+      if (!aobj) return;
+      c.remove(aobj);
+      c.requestRenderAll();
+    },
+
+    /**
+     * 增加文字
+     */
+    addText: function() {
+      let c = this.mcs;
+      let colorPicker = document.createElement("input");
+      let color = "#FFF";
+      colorPicker.type = "color";
+      colorPicker.click();
+
+      var textbox = new fabric.Textbox("点击编辑", {
+        left: 20,
+        top: 50,
+        fill: color
+      });
+
+      colorPicker.onchange = function(e) {
+        textbox.set("fill", e.target.value);
+        c.requestRenderAll();
+      };
+
+      c.add(textbox);
+      c.requestRenderAll();
+    },
+
+    /**
+     * 将选择的图片作为背景图片
+     */
+    setAsBcg: function() {
+      let c = this.mcs;
+      console.log(c.getActiveObject());
+      if (!c.getActiveObject()) {
+        return;
+      }
+      c.getActiveObject().evented = false;
+      c.getActiveObject().hasControls = false;
+      c.getActiveObject().selectable = false;
+      c.requestRenderAll();
+    },
+
+    /**
+     * 拖拽事件接收落点的函数
+     */
+    drop: function(e) {
+      let c = this.mcs;
+      e.preventDefault();
+      let url = e.dataTransfer.getData("text/plain").slice(5, -2);
+      fabric.Image.fromURL(url, function(img) {
+        c.add(
+          img.set({ left: 0, top: 0, angle: 0, selectable: true }).scale(0.1)
+        );
+      });
+    },
+
+    /**
+     * 触发input，选择图片
+     */
     getfiles: function() {
       this.$refs.picSelector.click();
     },
+
+    /**
+     * 读取选择的文件
+     */
     readFile: function() {
       let ps = document.getElementById("picSelector");
       let t = this;
@@ -156,31 +191,68 @@ export default {
           //通过正则选出后缀是照片后缀的文件，i是ignore的意思，用于忽略大小写。但这并不完美，当文件为xxx.jpg.html时，也会匹配到
           let reader = new FileReader();
           reader.readAsDataURL(ps.files[i]);
-          // reader.fileName = ps.files[i].name;
           reader.onload = function(e) {
             let picTemp = {
               id: "ps" + t.picSource.length,
               s: this.result
             };
-            t.picSource.push(picTemp);
+            t.addPicToPicSource(picTemp);
           };
         }
       }
     },
     initEditor() {
-      console.log("???");
-      let outer = window.document.getElementById("picEditorOuter");
       let canvas = new fabric.Canvas("picEditor");
       canvas.setHeight(400);
       canvas.setWidth(400);
       canvas.renderAll();
     },
+    /**
+     * 将图片添加到vuex的store中
+     */
+    addPicToPicSource(pic) {
+      this.$store.dispatch("editor/addToPicSource", pic);
+    },
+    /**
+     *组合所有选择的图片、文字等
+     */
+    group() {
+      if (!this.mcs.getActiveObject()) {
+        return;
+      }
+      if (this.mcs.getActiveObject().type !== "activeSelection") {
+        return;
+      }
+      this.mcs.getActiveObject().toGroup();
+      this.mcs.requestRenderAll();
+    },
+
+    /**
+     * 初始化canvas
+     */
+    initP() {
+      let t = document.getElementById("wallPreview");
+      let canvas = new fabric.Canvas("wallPreview");
+      canvas.setHeight(960 * 0.41667);
+      canvas.setWidth(960 * 0.83333);
+      this.mcs = canvas;
+      canvas.renderAll();
+      let upperCanvas = t.parentElement.getElementsByTagName("canvas")[1];
+      upperCanvas.ondrop = this.drop;
+    },
+
+    /**
+     *  加载素材
+     */
+    loadMaterial() {
+      this.$store.dispatch("editor/loadMaterial")
+    }
   },
-
-  computed: {},
-
   mounted() {
-    this.initEditor();
+    this.$store.dispatch("user/init"),
+      this.initEditor(),
+      this.initP(),
+      this.loadMaterial();
   }
 };
 </script>
@@ -249,28 +321,40 @@ export default {
   border: 0.5px dotted #d8d8d8;
   margin: 0 auto;
 }
+
+.picsWallPreviewMain {
+  position: absolute;
+  width: 96%;
+  height: 96%;
+  margin: 1% 2%;
+  border: 0.5px solid #d8d8d8;
+  text-align: center;
+}
+
+.picsWallPreview {
+  position: relative;
+  margin-top: 1%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0.5px dotted #d8d8d8;
+  /* background-color: #fff; */
+  /* width: 83.333%; */
+  /* height: 0; */
+  /* padding-bottom: 41.667%; */
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.picsWallPreviewMain .canvas-container {
+  margin: 0 auto;
+}
 </style>
 
 <style scoped>
-/*BASE*/
-.title {
-  position: relative;
-  height: 10%;
-  width: 100%;
-  color: white;
-  border-bottom: 0.5px solid #d8d8d8;
-  border-top: 0.5px solid #d8d8d8;
-}
-
-.title div {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .editor {
   position: relative;
   max-width: 1920px !important;
@@ -285,6 +369,7 @@ export default {
 .previewModule {
   position: relative;
   border-right: 0.5px solid #d8d8d8;
+  text-align: center;
   /* background-color: green; */
 }
 
@@ -307,34 +392,6 @@ export default {
   width: 100%;
   height: 50%;
   /* background-color: #fff; */
-}
-
-.picsWallPreviewMain {
-  position: absolute;
-  width: 96%;
-  height: 96%;
-  margin: 1% 2%;
-  border: 0.5px solid #d8d8d8;
-}
-
-.picsWallPreview {
-  position: relative;
-  margin-top: 1%;
-  margin-left: auto;
-  margin-right: auto;
-  border: 0.5px dotted #d8d8d8;
-  /* background-color: #fff; */
-  width: 83.333%;
-  height: 0;
-  padding-bottom: 41.667%;
-  overflow: hidden;
-  background-position: center center;
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-
-  background-image: url("/src/img/green.jpg");
 }
 
 .picEditorModule {

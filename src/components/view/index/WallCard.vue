@@ -1,11 +1,12 @@
 <template>
   <transition appear name="fadeInLeft">
-    <b-container fluid class="wp-card" :style="bcg">
+    <b-container class="wp-card">
+      <canvas :id="id"></canvas>
       <b-container class="wp-card-info">
-        <div class="publisher">发布者:{{ author }}</div>
+        <div class="publisher">{{author}}</div>
         <div class="like">
-          <font-awesome-icon v-on:click="like" icon="heart" class="icon"/>
-          <span class="p-num">{{ likeNum }}人</span>
+          <font-awesome-icon icon="heart" @click="like" class="icon"/>
+          <span class="p-num">{{likes}}人</span>
         </div>
       </b-container>
     </b-container>
@@ -15,14 +16,10 @@
 <script>
 import "@fortawesome/fontawesome-free";
 export default {
-  props: ["author", "likes", "src", "alt"],
+  props: ["id", "author", "likes", "WJSON"],
   data: function() {
     return {
-      liked: false,
-      likeNum: this.likes,
-      bcg: {
-        backgroundImage: "url(" + this.src + ")"
-      }
+      liked: false
     };
   },
   computed: {},
@@ -30,14 +27,12 @@ export default {
   methods: {
     like: function(e) {
       if (this.liked === false) {
-        console.log("已赞");
+        this.$store.dispatch("picsWall/like", this.id);
         this.changeColor(e, "red");
-        this.likeNum++;
         this.liked = true;
       } else {
-        console.log("已取消赞");
+        this.$store.dispatch("picsWall/dislike", this.id);
         this.changeColor(e, "grey");
-        this.likeNum--;
         this.liked = false;
       }
     },
@@ -52,7 +47,17 @@ export default {
           break;
         default:
       }
+    },
+    init() {
+      let mcs = new fabric.StaticCanvas(this.id);
+      let json = this.WJSON;
+      mcs.setHeight(960 * 0.41667);
+      mcs.setWidth(960 * 0.83333);
+      mcs.loadFromJSON(json, mcs.renderAll.bind(mcs));
     }
+  },
+  mounted() {
+    this.init();
   }
 };
 </script>
@@ -94,6 +99,12 @@ export default {
   -webkit-animation-name: fadeInLeft;
   animation-name: fadeInLeft;
 }
+
+
+.wp-card {
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>
 
 
@@ -111,15 +122,16 @@ export default {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
 }
 
 .wp-card .wp-card-info {
   position: absolute;
+  bottom: 0;
   height: 64px;
   line-height: 64px;
-  margin: 0 -15px;
   text-align: center;
-  bottom: 0;
   background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -128,6 +140,12 @@ export default {
   display: inline-block;
   left: 5%;
   top: 0;
+}
+
+.wp-card .wp-card-info .publisher {
+  font-size: 24px;
+  color: black;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .wp-card .wp-card-info .like .icon {

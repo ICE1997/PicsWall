@@ -12,7 +12,7 @@
   width: 64px;
   height: 64px;
   background-color: rgba(255, 255, 255, 0.4);
-  background-image: url("/src/img/top.png");
+  background-image: url("/dist/img/top.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 60%;

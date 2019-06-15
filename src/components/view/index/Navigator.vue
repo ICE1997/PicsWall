@@ -1,16 +1,16 @@
 <template>
   <b-navbar toggleable="lg" type="mdark" variant="mBlack">
-    <b-navbar-brand  href="#">Moments</b-navbar-brand>
+    <b-navbar-brand href="#">Moments</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav v-if="!logined" class="ml-auto">
         <b-nav-item v-b-modal.modal-center-login>登录</b-nav-item>
-        <b-modal id="modal-center-login" centered title="登录">
-          <p class="my-4">这是登录弹窗</p>
+        <b-modal id="modal-center-login" centered hide-footer title="登录">
+          <LoginModule/>
         </b-modal>
         <b-nav-item v-b-modal.modal-center-signup>注册</b-nav-item>
-        <b-modal id="modal-center-signup" centered title="注册">
-          <p class="my-4">这是注册弹窗</p>
+        <b-modal id="modal-center-signup" centered hide-footer title="注册">
+          <RegisterModule/>
         </b-modal>
       </b-navbar-nav>
       <b-navbar-nav v-else class="ml-auto">
@@ -21,36 +21,31 @@
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
-    <button @click="login"></button>
   </b-navbar>
 </template>
 
 
 <<script>
 import {mapState,mapActions} from 'vuex'
+import LoginModule from './Login.vue'
+import RegisterModule from './Register.vue'
 
 export default {
+  components:{
+    LoginModule,RegisterModule
+  },
   data() {
     return {
-      user:"ICE"
     }
   },
   computed: {
     ...mapState({
-      logined: state=>state.user.logined
-    })
+      logined: state=>state.user.logined,
+      user: state=>state.user.userInfo.username
+    }),
   },
   methods: {
     ...mapActions('user',['logout']),
-    login() {
-      console.log('hah');
-      let userinfo  = {
-        username:'1',
-        password:'1'
-      }
-      this.$store.dispatch('user/login',userinfo);
-      console.log("qaf");
-    }
   },
   mounted() {
     

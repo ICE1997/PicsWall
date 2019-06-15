@@ -1,0 +1,316 @@
+
+.btns {
+  text-align: center;
+}
+.btns button {
+  padding: 8px 16px;
+}
+
+
+.main[data-v-3eeea272] {
+  width: 70%;
+}
+
+
+.btns {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+
+.main[data-v-3a7b092a] {
+  width: 70%;
+}
+
+
+.btn-auth {
+  color: #fff !important;
+}
+.btn-auth:hover {
+  color: #fff;
+  background-color: brown;
+  border-color: brown;
+}
+.btn-auth:focus,
+.btn-auth.focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
+}
+.btn-auth:not(:disabled):not(.disabled):active:focus,
+.btn-auth:not(:disabled):not(.disabled).active:focus,
+.show > .btn-auth.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(245, 47, 47, 0.5);
+}
+.navbar-mdark .navbar-brand {
+  color: #fff;
+}
+.navbar-mdark .navbar-brand:hover,
+.navbar-mdark .navbar-brand:focus {
+  color: #fff;
+}
+.navbar-mdark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+}
+.navbar-mdark .navbar-nav .nav-link:hover,
+.navbar-mdark .navbar-nav .nav-link:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+.navbar-mdark .navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.25);
+}
+.navbar-mdark .navbar-nav .show > .nav-link,
+.navbar-mdark .navbar-nav .active > .nav-link,
+.navbar-mdark .navbar-nav .nav-link.show,
+.navbar-mdark .navbar-nav .nav-link.active {
+  color: #fff;
+}
+.navbar-mdark .navbar-toggler {
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.navbar-mdark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar-mdark .navbar-text {
+  color: rgba(255, 255, 255, 1);
+}
+.navbar-mdark .navbar-text a {
+  color: #fff;
+}
+.navbar-mdark .navbar-text a:hover,
+.navbar-mdark .navbar-text a:focus {
+  color: #fff;
+}
+
+
+.bg-mBlack[data-v-648ad5e0] {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+a[data-v-648ad5e0] {
+  color: rgba(255, 255, 255, 1) !important;
+}
+a[data-v-648ad5e0]:hover,
+a[data-v-648ad5e0]:focus {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+
+.hasSelected{
+  border-bottom: 3px solid white;
+}
+
+
+.header[data-v-7f8f47d4] {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 521px;
+}
+.header .slogan[data-v-7f8f47d4] {
+  position: absolute;
+  color: white;
+  left: -35%;
+  font-size: 5rem;
+  text-align: center;
+  top: 50%;
+}
+.header .title-box[data-v-7f8f47d4] {
+  position: absolute;
+  width: 60%;
+  height: 64px;
+  bottom: -32px;
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 99;
+}
+.header .title-box .title[data-v-7f8f47d4] {
+  font-size: 24px;
+  margin: 0 16px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.title a[data-v-7f8f47d4] {
+  color: white !important;
+}
+.title a[data-v-7f8f47d4]:hover {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.header .title-box .title[data-v-7f8f47d4]:active {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+
+.fadeInLeft-enter-active {
+  animation: fadeInLeft 1s;
+}
+@-webkit-keyframes fadeInLeft {
+from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+}
+@keyframes fadeInLeft {
+from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+}
+.fadeInLeft {
+  -webkit-animation-name: fadeInLeft;
+  animation-name: fadeInLeft;
+}
+.wp-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+.wp-card[data-v-3db7e301] {
+  position: relative;
+  margin-top: 2rem;
+  background-color: #fff;
+  width: 50%;
+  height: 0;
+  padding-bottom: 25%;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}
+.wp-card .wp-card-info[data-v-3db7e301] {
+  position: absolute;
+  bottom: 0;
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.wp-card .wp-card-info .like[data-v-3db7e301] {
+  position: absolute;
+  display: inline-block;
+  left: 5%;
+  top: 0;
+}
+.wp-card .wp-card-info .publisher[data-v-3db7e301] {
+  font-size: 24px;
+  color: black;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.wp-card .wp-card-info .like .icon[data-v-3db7e301] {
+  color: grey;
+  transition: all 0.3s;
+}
+.wp-card .wp-card-info .like .p-num[data-v-3db7e301] {
+  position: relative;
+  margin-left: 8px;
+}
+
+
+.outerCanvas {
+  position: relative;
+  height: 400px;
+  width: 800px;
+}
+.test {
+  position: relative;
+  margin: 0 auto;
+  border: 0.5px dotted #d8d8d8;
+  overflow: hidden;
+}
+.canvas-container {
+  margin: 0 auto;
+}
+.wp-card-info {
+  position: absolute;
+  height: 64px;
+  line-height: 64px;
+  /* margin: 0 -15px; */
+  text-align: center;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  z-index: 999;
+}
+.wp-card-info .like {
+  position: absolute;
+  display: inline-block;
+  left: 5%;
+  top: 0;
+}
+.wp-card-info .like .icon {
+  color: grey;
+  transition: all 0.3s;
+}
+.wp-card-info .like .p-num {
+  position: relative;
+  margin-left: 8px;
+}
+
+
+.wp[data-v-10eadf5e] {
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+  padding-top: 8px;
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+
+.go-top[data-v-76db5456] {
+  position: fixed;
+  display: block;
+  z-index: 99;
+  right: 3%;
+  bottom: 3%;
+  width: 64px;
+  height: 64px;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: url("/dist/img/top.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  border-radius: 50%;
+}
+
+
+.foot[data-v-5e5ce3e2] {
+  position: relative;
+  height: 128px;
+  margin-top: 32px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+#app[data-v-5c1a996a] {
+  background-image: url("/dist/img/wall.jpg");
+  background-repeat: repeat;
+  background-size: 70%;
+}
+
