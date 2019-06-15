@@ -15,6 +15,7 @@
 
 <script>
 import "@fortawesome/fontawesome-free";
+import { mapState } from "vuex";
 export default {
   props: ["id", "author", "likes", "WJSON"],
   data: function() {
@@ -22,18 +23,24 @@ export default {
       liked: false
     };
   },
-  computed: {},
+  computed: {
+    ...mapState("user", ["logined"])
+  },
   watch: {},
   methods: {
     like: function(e) {
-      if (this.liked === false) {
-        this.$store.dispatch("picsWall/like", this.id);
-        this.changeColor(e, "red");
-        this.liked = true;
-      } else {
-        this.$store.dispatch("picsWall/dislike", this.id);
-        this.changeColor(e, "grey");
-        this.liked = false;
+      if (this.logined) {
+        if (this.liked === false) {
+          this.$store.dispatch("picsWall/like", this.id);
+          this.changeColor(e, "red");
+          this.liked = true;
+        } else {
+          this.$store.dispatch("picsWall/like", this.id);
+          this.changeColor(e, "grey");
+          this.liked = false;
+        }
+      }else{
+        console.log("请先登录~~~");
       }
     },
     changeColor: function(e, color) {
@@ -99,7 +106,6 @@ export default {
   -webkit-animation-name: fadeInLeft;
   animation-name: fadeInLeft;
 }
-
 
 .wp-card {
   padding-left: 0;

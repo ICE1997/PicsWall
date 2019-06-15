@@ -87,7 +87,7 @@ const actions = {
             return (response.data.data)[0];
         }).then(function(payload) {
             console.log(payload);
-            // commit('updateBcgSource', payload.bcg);
+            commit('updateBcgSource', payload.bcg);
             // commit('updateBorderSource', payload.border);
             // commit('updateHangingSource', payload.hanging);
         })

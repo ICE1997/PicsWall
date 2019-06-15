@@ -9,32 +9,16 @@ const actions = {
     loadWalls({ commit }) {
         commit('getAllWalls');
     },
-    like({ commit }, wallid) {
+    like({ commit,rootState }, wallid) {
         axios({
             method: "post",
             url: SERVER + "/upload/updatesupport",
             data: {
+                token:rootState.user.userInfo.token,
                 id: wallid,
-                flag: 1
             }
         }).then(function(response) {
-            let likes = response.data.data.supportnum;
-            let payload = {
-                id: wallid,
-                likes: likes
-            }
-            commit("updatelikes", payload);
-        })
-    },
-    dislike({ commit }, wallid) {
-        axios({
-            method: "post",
-            url: SERVER + "/upload/updatesupport",
-            data: {
-                id: wallid,
-                flag: 0
-            }
-        }).then(function(response) {
+            console.log(response);
             let likes = response.data.data.supportnum;
             let payload = {
                 id: wallid,

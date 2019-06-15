@@ -146,7 +146,7 @@ export default {
      * 将选择的图片作为背景图片
      */
     setAsBcg: function() {
-      let c = this.mcs;
+      let c = this.mcs  ;
       console.log(c.getActiveObject());
       if (!c.getActiveObject()) {
         return;
