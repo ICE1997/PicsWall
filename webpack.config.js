@@ -10,7 +10,8 @@ module.exports = {
     mode: 'development',
     entry: {
         index: './src/index.js',
-        editor: './src/editor.js'
+        editor: './src/editor.js',
+        userinfo: './src/userinfo.js'
     },
 
     output: {
@@ -62,6 +63,12 @@ module.exports = {
             template: './src/html/template/index.html',
             title: '编辑器',
             chunks: ['vendors', 'editor', 'runtime']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'userinfo.html',
+            template: './src/html/template/index.html',
+            title: 'TA的信息',
+            chunks: ['vendors', 'userinfo', 'runtime']
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',

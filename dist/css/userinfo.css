@@ -1,0 +1,208 @@
+
+.btns {
+  text-align: center;
+}
+.btns button {
+  padding: 8px 16px;
+}
+
+
+.main[data-v-3eeea272] {
+  width: 70%;
+}
+
+
+.btns {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+
+.main[data-v-3a7b092a] {
+  width: 70%;
+}
+
+
+.btn-auth {
+  color: #fff !important;
+}
+.btn-auth:hover {
+  color: #fff;
+  background-color: brown;
+  border-color: brown;
+}
+.btn-auth:focus,
+.btn-auth.focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
+}
+.btn-auth:not(:disabled):not(.disabled):active:focus,
+.btn-auth:not(:disabled):not(.disabled).active:focus,
+.show > .btn-auth.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(245, 47, 47, 0.5);
+}
+.navbar-mdark .navbar-brand {
+  color: #fff;
+}
+.navbar-mdark .navbar-brand:hover,
+.navbar-mdark .navbar-brand:focus {
+  color: #fff;
+}
+.navbar-mdark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+}
+.navbar-mdark .navbar-nav .nav-link:hover,
+.navbar-mdark .navbar-nav .nav-link:focus {
+  color: rgba(255, 255, 255, 0.75);
+}
+.navbar-mdark .navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.25);
+}
+.navbar-mdark .navbar-nav .show > .nav-link,
+.navbar-mdark .navbar-nav .active > .nav-link,
+.navbar-mdark .navbar-nav .nav-link.show,
+.navbar-mdark .navbar-nav .nav-link.active {
+  color: #fff;
+}
+.navbar-mdark .navbar-toggler {
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.navbar-mdark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar-mdark .navbar-text {
+  color: rgba(255, 255, 255, 1);
+}
+.navbar-mdark .navbar-text a {
+  color: #fff;
+}
+.navbar-mdark .navbar-text a:hover,
+.navbar-mdark .navbar-text a:focus {
+  color: #fff;
+}
+
+
+.bg-mBlack[data-v-648ad5e0] {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+a[data-v-648ad5e0] {
+  color: rgba(255, 255, 255, 1) !important;
+}
+a[data-v-648ad5e0]:hover,
+a[data-v-648ad5e0]:focus {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+
+.foot[data-v-5e5ce3e2] {
+  position: relative;
+  height: 128px;
+  margin-top: 32px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url("/dist/img/blue.jpg");
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+}
+.navigator {
+  width: 100%;
+  align-self: flex-start;
+  z-index: 99;
+}
+.main {
+  position: relative;
+  /* height: 1920px; */
+  padding: 32px;
+  /* background-color: #fff; */
+}
+.foot {
+  height: 84px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.m-header {
+  position: relative;
+  display: flex;
+  height: 360px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 3px solid white;
+  background-attachment: fixed;
+}
+.m-header .blur {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: blur(5px);
+  background-image: url("/dist/img/blue.jpg");
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+}
+.username {
+  position: absolute;
+  color: white;
+  align-self: center;
+  font-size: 64px;
+}
+.usericon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 64px;
+  height: 64px;
+  bottom: -32px;
+  font-size: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.briefIntro {
+  display: flex;
+  position: absolute;
+  height: 32px;
+  width: 45%;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  color: white;
+  justify-content: center;
+}
+.userinfo {
+  display: flex;
+  position: absolute;
+  height: 32px;
+  width: 45%;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}
+.userinfo div {
+  color: white;
+  font-size: 16px;
+  width: 50%;
+  text-align: center;
+}
+.wall {
+  margin-top: 16px;
+  height: 100%;
+  text-align: center;
+}
+.card {
+  display: inline-block;
+  width: 800px;
+  height: 400px;
+  margin: 16px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
