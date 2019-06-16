@@ -3,9 +3,14 @@
     <b-container class="wp-card">
       <canvas :id="id"></canvas>
       <b-container class="wp-card-info">
-        <div class="publisher">{{author}}</div>
+        <a class="publisher" href="./userinfo.html" target="_blank">{{author}}</a>
         <div class="like">
-          <font-awesome-icon icon="heart" @click="like" class="icon"/>
+          <font-awesome-icon
+            icon="heart"
+            @click="like"
+            :class="[liked ? 'redicon' : 'greyicon' ]"
+            class="icon"
+          />
           <span class="p-num">{{likes}}人</span>
         </div>
       </b-container>
@@ -17,11 +22,9 @@
 import "@fortawesome/fontawesome-free";
 import { mapState } from "vuex";
 export default {
-  props: ["id", "author", "likes", "WJSON"],
+  props: ["id", "author", "likes", "liked", "WJSON"],
   data: function() {
-    return {
-      liked: false
-    };
+    return {};
   },
   computed: {
     ...mapState("user", ["logined"])
@@ -30,29 +33,12 @@ export default {
   methods: {
     like: function(e) {
       if (this.logined) {
-        if (this.liked === false) {
-          this.$store.dispatch("picsWall/like", this.id);
-          this.changeColor(e, "red");
-          this.liked = true;
-        } else {
-          this.$store.dispatch("picsWall/like", this.id);
-          this.changeColor(e, "grey");
-          this.liked = false;
-        }
-      }else{
+        let payload = {
+          id: this.id
+        };
+        this.$store.dispatch("picsWall/like", payload);
+      } else {
         console.log("请先登录~~~");
-      }
-    },
-    changeColor: function(e, color) {
-      let likeIcon = e.target;
-      switch (likeIcon.tagName) {
-        case "svg":
-          likeIcon.style.color = color;
-          break;
-        case "path":
-          likeIcon.parentElement.style.color = color;
-          break;
-        default:
       }
     },
     init() {
@@ -61,7 +47,7 @@ export default {
       mcs.setHeight(960 * 0.41667);
       mcs.setWidth(960 * 0.83333);
       mcs.loadFromJSON(json, mcs.renderAll.bind(mcs));
-    }
+    },
   },
   mounted() {
     this.init();
@@ -111,6 +97,14 @@ export default {
   padding-left: 0;
   padding-right: 0;
 }
+
+.redicon {
+  color: red;
+}
+
+.greyicon {
+  color: grey;
+}
 </style>
 
 
@@ -155,7 +149,6 @@ export default {
 }
 
 .wp-card .wp-card-info .like .icon {
-  color: grey;
   transition: all 0.3s;
 }
 

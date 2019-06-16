@@ -7,7 +7,7 @@
   position: fixed;
   display: block;
   z-index: 99;
-  right: 3%;
+  right: 2%;
   bottom: 3%;
   width: 64px;
   height: 64px;

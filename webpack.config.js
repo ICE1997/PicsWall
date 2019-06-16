@@ -11,7 +11,8 @@ module.exports = {
     entry: {
         index: './src/index.js',
         editor: './src/editor.js',
-        userinfo: './src/userinfo.js'
+        userinfo: './src/userinfo.js',
+        myzone: './src/myzone.js'
     },
 
     output: {
@@ -69,6 +70,12 @@ module.exports = {
             template: './src/html/template/index.html',
             title: 'TA的信息',
             chunks: ['vendors', 'userinfo', 'runtime']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'myzone.html',
+            template: './src/html/template/index.html',
+            title: '个人空间',
+            chunks: ['vendors', 'myzone', 'runtime']
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',

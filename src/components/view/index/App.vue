@@ -24,7 +24,7 @@ export default {
     mLogin
   },
   computed: {},
-  mounted() {
+  created() {
     this.$store.dispatch("user/init");
   }
 };
@@ -39,7 +39,8 @@ export default {
 
 <style scoped>
 #app {
-  background-image: url("/dist/img/wall.jpg");
+  background-image: url("/dist/img/blue.jpg");
+  background-position: center;
   background-repeat: repeat;
   background-size: 70%;
 }

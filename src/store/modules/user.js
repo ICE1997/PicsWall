@@ -41,7 +41,6 @@ const actions = {
                     response: response,
                     username: username
                 }
-                console.log(payload);
                 commit('setLogined', payload);
                 resolve();
             }).catch(error => {
@@ -99,8 +98,9 @@ const mutations = {
                 localStorage.setItem("usrToken", token);
                 localStorage.setItem("logined", true);
                 localStorage.setItem("usrName", username);
+                localStorage.setItem("expireTime", new Date().getTime() + 1 * 3600 * 1000);
             } else {
-                state.loginState.responseCode = "400"
+                state.loginState.responseCode = "400";
             }
         }
     },
@@ -109,10 +109,11 @@ const mutations = {
         state.userInfo.username = "";
         state.userInfo.token = "";
         state.loginState.succeed = false;
-        state.loginState.responseCode = ""
+        state.loginState.responseCode = "";
         localStorage.removeItem("usrToken");
         localStorage.removeItem("logined");
         localStorage.removeItem("usrName");
+        localStorage.removeItem("expireTime");
     },
     newRegister(state, response) {
         let status = response.data.status;
@@ -138,17 +139,21 @@ const mutations = {
         }
     },
     init(state) {
-        let logined = localStorage.getItem("logined");
-        let usrName = localStorage.getItem("usrName");
-        let token = localStorage.getItem("usrToken");
-        if (logined) {
-            state.logined = true;
-            state.userInfo.username = usrName;
-            state.userInfo.token = token;
-        } else {
-            state.logined = false;
-            state.userInfo.username = "";
-            state.userInfo.token = "";
+        let expireTime = localStorage.getItem("expireTime");
+        if (expireTime != null && expireTime != undefined && expireTime != '' && expireTime > new Date().getTime()) {
+            let logined = localStorage.getItem("logined");
+            let usrName = localStorage.getItem("usrName");
+            let token = localStorage.getItem("usrToken");
+            console.log(expireTime);
+            if (logined) {
+                state.logined = true;
+                state.userInfo.username = usrName;
+                state.userInfo.token = token;
+            } else {
+                state.logined = false;
+                state.userInfo.username = "";
+                state.userInfo.token = "";
+            }
         }
     }
 }

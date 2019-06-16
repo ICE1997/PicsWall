@@ -1,12 +1,21 @@
 <template>
-  <div>
+  <div class="user">
+    <GoTop/>
     <header class="m-header">
       <Nav class="navigator"/>
       <div class="blur"></div>
-      <div class="username">HFS</div>
+      <transition appear name="fadeInDown">
+        <div class="username">CXK</div>
+      </transition>
 
-      <div class="briefIntro">This is me!</div>
-      <div class="usericon">H</div>
+      <div class="briefIntro">大家好，我是实习练习生CXK,希望大家喜欢我。</div>
+
+      <transition appear name="fadeInDown">
+        <b-button class="follow">关注</b-button>
+      </transition>
+      <transition appear name="fadeInDown">
+        <div class="usericon">C</div>
+      </transition>
 
       <div class="userinfo">
         <div class="phone">手机号:18756005001</div>
@@ -15,16 +24,47 @@
     </header>
 
     <div class="main">
-      <div class="wall">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-      </div>
+      <Wall/>
     </div>
 
-    <Foot />
+    <Foot/>
   </div>
 </template>
+
+
+<style>
+.fadeInDown-enter-active {
+  animation: fadeInDown 1s;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -50%, 0);
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+</style>
 
 <style>
 * {
@@ -32,7 +72,7 @@
   padding: 0;
 }
 
-body {
+.user {
   background-image: url("/dist/img/blue.jpg");
   background-position: center;
   background-repeat: repeat;
@@ -47,9 +87,7 @@ body {
 
 .main {
   position: relative;
-  /* height: 1920px; */
   padding: 32px;
-  /* background-color: #fff; */
 }
 
 .foot {
@@ -65,6 +103,11 @@ body {
   justify-content: center;
   border-bottom: 3px solid white;
   background-attachment: fixed;
+}
+
+.follow {
+  position: absolute;
+  bottom: 64px;
 }
 
 .m-header .blur {
@@ -128,32 +171,27 @@ body {
   width: 50%;
   text-align: center;
 }
-
-.wall {
-  margin-top: 16px;
-  height: 100%;
-  text-align: center;
-}
-
-.card {
-  display: inline-block;
-  width: 800px;
-  height: 400px;
-  margin: 16px;
-  border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
 </style>
 
 
 <script>
+import Nav from "../index/Navigator.vue";
+import Foot from "../index/Footer.vue";
+import Wall from "../userinfo/Wall.vue";
+import GoTop from "../index/GoTop.vue";
 
-import Nav from '../index/Navigator.vue'
-import Foot from '../index/Footer.vue'
 export default {
-    components:{
-        Nav,Foot
-    }
-}
+  components: {
+    Nav,
+    Foot,
+    Wall,
+    GoTop
+  },
+  created() {
+    this.$store.dispatch("user/init");
+  }
+};
 </script>
+
+
 

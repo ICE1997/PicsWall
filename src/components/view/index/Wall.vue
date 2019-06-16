@@ -6,74 +6,58 @@
       :id="wall.id"
       :author="wall.author"
       :likes="wall.likes"
+      :liked="wall.liked"
       :WJSON="wall.wallJSON"
     />
+    <div class="loading" v-show="!toTheEnd && loading">
+      <b-spinner small type="grow"></b-spinner>Loading...
+    </div>
+    <div class="loading" v-show="toTheEnd">
+      已加载全部
+    </div>
   </div>
 </template>
 
 <script>
 import WallCard from "./WallCard.vue";
 import { mapState, mapActions } from "vuex";
+import { win32 } from 'path';
 export default {
   data: function() {
-    return {};
+    return {
+    };
   },
   computed: {
-    ...mapState("picsWall", ["walls"])
+    ...mapState("picsWall", ["walls","loading","toTheEnd"])
   },
   components: {
     WallCard
   },
   mounted: function() {
     this.$store.dispatch("picsWall/loadWalls");
+    this.loadmoreEvent();
   },
   methods: {
+    reqLoadmore(){
+      this.$store.dispatch("picsWall/loadWalls");
+    },
+    loadmoreEvent(){
+      let t = this;
+      window.onscroll = function(e){
+        let visibleTop = document.body.scrollTop || document.documentElement.scrollTop;//当前可视范围的顶部
+        let visibleHeight = document.documentElement.clientHeight;//可视范围的高度
+        let allHeight = document.body.clientHeight;//整个文档的高度，因此visibleTop + viibleHeight == allHeight;
+        if(visibleTop+visibleHeight >= allHeight-500 && !t.loading){
+          console.log("到达底部了~~~");
+          t.reqLoadmore();
+        }
+      }
+    }
   }
 };
 </script>
 
 <style>
-.outerCanvas {
-  position: relative;
-  height: 400px;
-  width: 800px;
-}
-
-.test {
-  position: relative;
-  margin: 0 auto;
-  border: 0.5px dotted #d8d8d8;
-  overflow: hidden;
-}
-.canvas-container {
-  margin: 0 auto;
-}
-
-.wp-card-info {
-  position: absolute;
-  height: 64px;
-  line-height: 64px;
-  /* margin: 0 -15px; */
-  text-align: center;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.4);
-  z-index: 999;
-}
-
-.wp-card-info .like {
-  position: absolute;
-  display: inline-block;
-  left: 5%;
-  top: 0;
-}
-.wp-card-info .like .icon {
-  color: grey;
-  transition: all 0.3s;
-}
-.wp-card-info .like .p-num {
-  position: relative;
-  margin-left: 8px;
-}
 </style>
 
 
@@ -85,5 +69,19 @@ export default {
   padding-top: 8px;
   padding-bottom: 48px;
   text-align: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  color: white;
+  font-size: 24px;  
+}
+
+.loading span {
+  width: 3rem;
+  height: 3rem;
 }
 </style>

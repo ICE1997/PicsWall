@@ -20,36 +20,9 @@ const state = {
         }
     ],
     picSource: [],
-    bcgSource: [{
-        id: "bcg0",
-        s: "/dist/img/brink.jpg"
-    }],
-    borderSource: [{
-            id: "bs0",
-            s: "/dist/img/brink.jpg"
-        },
-        {
-            id: "bs1",
-            s: "/dist/img/green.jpg"
-        },
-        {
-            id: "bs2",
-            s: "/dist/img/chalkboard.jpg"
-        }
-    ],
-    hangingSource: [{
-            id: "hs0",
-            s: "/dist/img/brink.jpg"
-        },
-        {
-            id: "hs1",
-            s: "/dist/img/green.jpg"
-        },
-        {
-            id: "hs2",
-            s: "/dist/img/chalkboard.jpg"
-        }
-    ],
+    bcgSource: [],
+    borderSource: [],
+    hangingSource: [],
 }
 
 
@@ -84,12 +57,11 @@ const actions = {
             method: "GET",
             url: SERVER + "/static/loadimgs"
         }).then(function(response) {
-            return (response.data.data)[0];
+            return (response.data.data);
         }).then(function(payload) {
-            console.log(payload);
             commit('updateBcgSource', payload.bcg);
-            // commit('updateBorderSource', payload.border);
-            // commit('updateHangingSource', payload.hanging);
+            commit('updateBorderSource', payload.border);
+            commit('updateHangingSource', payload.hanging);
         })
     }
 }
@@ -103,18 +75,34 @@ const mutations = {
         state.picSource.push(temp);
     },
     updateHangingSource(state, payload) {
-        console.log(payload);
+        let paths = payload;
+        for (let i in paths) {
+            let path = paths[i];
+            let temp = {
+                id: 'bcg' + state.hangingSource.length,
+                s: MaterialPath + "/" + path
+            }
+            state.hangingSource.push(temp);
+        }
     },
     updateBorderSource(state, payload) {
-        console.log(payload);
+        let paths = payload;
+        for (let i in paths) {
+            let path = paths[i];
+            let temp = {
+                id: 'bs' + state.borderSource.length,
+                s: MaterialPath + "/" + path
+            }
+            state.borderSource.push(temp);
+        }
     },
     updateBcgSource(state, payload) {
-        let bcg = payload;
-        for (let b in bcg) {
-            let bcgPath = bcg[b];
+        let paths = payload;
+        for (let i in paths) {
+            let path = paths[i];
             let temp = {
-                id: 'bcg' + state.bcgSource.length,
-                s: MaterialPath + "/" + bcgPath
+                id: 'hs' + state.bcgSource.length,
+                s: MaterialPath + "/" + path
             }
             state.bcgSource.push(temp);
         }

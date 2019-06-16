@@ -180,6 +180,12 @@ to {
   padding-left: 0;
   padding-right: 0;
 }
+.redicon {
+  color: red;
+}
+.greyicon {
+  color: grey;
+}
 
 
 .wp-card[data-v-3db7e301] {
@@ -218,50 +224,9 @@ to {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 .wp-card .wp-card-info .like .icon[data-v-3db7e301] {
-  color: grey;
   transition: all 0.3s;
 }
 .wp-card .wp-card-info .like .p-num[data-v-3db7e301] {
-  position: relative;
-  margin-left: 8px;
-}
-
-
-.outerCanvas {
-  position: relative;
-  height: 400px;
-  width: 800px;
-}
-.test {
-  position: relative;
-  margin: 0 auto;
-  border: 0.5px dotted #d8d8d8;
-  overflow: hidden;
-}
-.canvas-container {
-  margin: 0 auto;
-}
-.wp-card-info {
-  position: absolute;
-  height: 64px;
-  line-height: 64px;
-  /* margin: 0 -15px; */
-  text-align: center;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.4);
-  z-index: 999;
-}
-.wp-card-info .like {
-  position: absolute;
-  display: inline-block;
-  left: 5%;
-  top: 0;
-}
-.wp-card-info .like .icon {
-  color: grey;
-  transition: all 0.3s;
-}
-.wp-card-info .like .p-num {
   position: relative;
   margin-left: 8px;
 }
@@ -275,13 +240,25 @@ to {
   padding-bottom: 48px;
   text-align: center;
 }
+.loading[data-v-10eadf5e] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  color: white;
+  font-size: 24px;
+}
+.loading span[data-v-10eadf5e] {
+  width: 3rem;
+  height: 3rem;
+}
 
 
 .go-top[data-v-76db5456] {
   position: fixed;
   display: block;
   z-index: 99;
-  right: 3%;
+  right: 2%;
   bottom: 3%;
   width: 64px;
   height: 64px;
@@ -309,7 +286,8 @@ to {
 
 
 #app[data-v-5c1a996a] {
-  background-image: url("/dist/img/wall.jpg");
+  background-image: url("/dist/img/blue.jpg");
+  background-position: center;
   background-repeat: repeat;
   background-size: 70%;
 }

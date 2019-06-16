@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" type="mdark" variant="mBlack">
-    <b-navbar-brand href="#">Moments</b-navbar-brand>
+    <b-navbar-brand href="index.html">Moments</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav v-if="!logined" class="ml-auto">
@@ -16,7 +16,7 @@
       <b-navbar-nav v-else class="ml-auto">
         <b-nav-text style="color:white;">Hello!</b-nav-text>
         <b-nav-item-dropdown id="auth-nav-dropdown" :text="user" right>
-          <b-dropdown-item>个人信息</b-dropdown-item>
+          <b-dropdown-item href="./myzone.html" target="_blank">个人空间</b-dropdown-item>
           <b-dropdown-item @click="logout">注销</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
