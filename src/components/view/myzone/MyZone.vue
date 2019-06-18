@@ -3,25 +3,31 @@
     <GoTop/>
     <header class="m-header">
       <Nav class="navigator"/>
-      <div class="blur"></div>
+      <transition appear name="fadeIn">
+        <div class="blur"></div>
+      </transition>
       <transition appear name="fadeInDown">
-        <div class="username">CXK</div>
+        <div class="username">{{username}}</div>
       </transition>
 
-      <input type="text" class="briefIntro" value="大家好，我是实习练习生CXK,希望大家喜欢我。"> 
+      <transition appear name="fadeInDown">
+        <div class="followedFans">关注人数:{{followedFans}}</div>
+      </transition>
+
+      <input type="text" class="briefIntro" @blur="save" v-model="info.briefIntro">
 
       <transition appear name="fadeInDown">
-        <div class="usericon">C</div>
+        <div class="usericon">{{firstA}}</div>
       </transition>
 
       <div class="userinfo">
         <div class="phone">
           手机号:
-          <input type="text" value="15155346991">
+          <input @blur="save" type="text" v-model="info.qq">
         </div>
         <div class="email">
           E-mail:
-          <input type="text" value="592092078@qq.com">
+          <input @blur="save" type="text" v-model="info.email">
         </div>
       </div>
     </header>
@@ -33,6 +39,49 @@
     <Foot/>
   </div>
 </template>
+
+<script>
+import Nav from "../index/Navigator.vue";
+import Foot from "../index/Footer.vue";
+import Wall from "../myzone/Wall.vue";
+import GoTop from "../index/GoTop.vue";
+import { mapState } from "vuex";
+
+export default {
+  components: {
+    Nav,
+    Foot,
+    Wall,
+    GoTop
+  },
+  computed: {
+    username() {
+      return this.$store.state.user.userInfo.username;
+    },
+    firstA() {
+      return this.$store.state.user.userInfo.username.charAt(0);
+    },
+    ...mapState("myzone", ["info", "followedFans"]),
+    ...mapState("user", ["logined"])
+  },
+  methods: {
+    save() {
+      this.$store.dispatch("myzone/save");
+    }
+  },
+  watch: {
+    logined() {
+      this.$store.dispatch("user/init");
+      this.$store.dispatch("myzone/loadinfo");
+    }
+  },
+  created() {
+    this.$store.dispatch("user/init");
+    this.$store.dispatch("myzone/loadinfo");
+       this.$store.dispatch("myzone/getFollowersNum");
+  }
+};
+</script>
 
 
 <style>
@@ -65,6 +114,30 @@
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeIn-enter-active {
+  animation: fadeIn 0.5s;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 </style>
@@ -156,6 +229,12 @@
   color: white;
 }
 
+.followedFans {
+  position: absolute;
+  color: white;
+  bottom: 64px;
+}
+
 .userinfo {
   display: flex;
   position: absolute;
@@ -174,7 +253,8 @@
   text-align: center;
 }
 
-.phone input, .email input{
+.phone input,
+.email input {
   padding-left: 16px;
 }
 
@@ -192,24 +272,7 @@ input:hover {
 </style>
 
 
-<script>
-import Nav from "../index/Navigator.vue";
-import Foot from "../index/Footer.vue";
-import Wall from "../myzone/Wall.vue";
-import GoTop from "../index/GoTop.vue";
 
-export default {
-  components: {
-    Nav,
-    Foot,
-    Wall,
-    GoTop
-  },
-  created() {
-    this.$store.dispatch("user/init");
-  }
-};
-</script>
 
 
 

@@ -3,12 +3,7 @@ import { SERVER } from '../../config/config.js'
 
 const state = {
     walls: [],
-    myWalls: [],
-    publicWalls: [],
-    followedWalls: [],
-    homePage: 0,
-    zonePage: 1,
-    userInfoPage: 1,
+    page: 0,
     loading: true,
     toTheEnd: false
 }
@@ -21,12 +16,6 @@ const actions = {
         commit('getAllWalls', payload);
     },
 
-    loadMyWalls({ commit, rootState }) {
-        let payload = {
-            token: rootState.user.userInfo.token
-        }
-        commit("getMyWalls", payload);
-    },
     like({ commit, rootState }, data) {
         axios({
             method: "post",
@@ -41,27 +30,36 @@ const actions = {
                 id: data.id,
                 likes: likes,
             }
-            commit("updateMylikes", payload);
+            commit("updatelikes", payload);
         })
+    },
+    initWalls({ commit }) {
+        commit("initWalls");
     }
 }
 
 const mutations = {
+    initWalls(state) {
+        state.walls = [];
+        state.loading = true;
+        state.toTheEnd = false;
+        state.page = 0;
+    },
     getAllWalls(state, payload) {
         if (!state.toTheEnd) {
-            console.log(state.walls.length);
             state.loading = true;
-            state.homePage++;
+            state.page++;
             axios({
                 method: "post",
                 url: SERVER + '/info/userinfo',
                 data: {
-                    pages: state.homePage
+                    pages: state.page
                 }
             }).then(function(response) {
-                console.log(response);
-                let walls = response["data"]["data"];
-                if (walls == "") {
+                let walls = [];
+                if (response["data"]["data"] !== undefined && response["data"]["data"] !== null && response["data"]["data"] instanceof Array && response["data"]["data"].length > 0) {
+                    walls = response["data"]["data"];
+                } else {
                     state.toTheEnd = true;
                     return;
                 }
@@ -105,52 +103,7 @@ const mutations = {
         }
     },
 
-    getMyWalls(state, payload) {
-        axios({
-            method: "post",
-            url: SERVER + '/info/mywalls',
-            data: {
-                token: payload.token
-            }
-        }).then(function(response) {
-            console.log(response);
-            let walls = response["data"]["data"];
-            for (let index in walls) {
-                let wall = walls[index];
-                let temp = {
-                    id: wall._id,
-                    author: wall.username,
-                    likes: wall.supportnum,
-                    liked: false,
-                    wallJSON: wall.imgpath,
-                };
-                state.myWalls.push(temp);
-            }
-        }).then(function() {
-            axios({
-                method: 'post',
-                url: SERVER + "/info/usersupport",
-                data: {
-                    token: payload.token
-                }
-            }).then(function(response) {
-                let data = response.data.data;
-                let likedIds = [];
-                for (let i in data) {
-                    likedIds.push(data[i].id);
-                }
 
-                for (let i in state.myWalls) {
-                    for (let j in likedIds) {
-                        if (state.myWalls[i].id === likedIds[j]) {
-                            state.myWalls[i].liked = true;
-                        }
-                    }
-                }
-
-            })
-        })
-    },
     updatelikes(state, payload) {
         let i = -1;
         for (let wall in state.walls) {
@@ -167,22 +120,7 @@ const mutations = {
             console.log("赞/取消赞失败...");
         }
     },
-    updateMylikes(state, payload) {
-        let i = -1;
-        for (let wall in state.myWalls) {
-            let twall = state.myWalls[wall];
-            if (twall.id == payload.id) {
-                i = wall;
-                break;
-            }
-        }
-        if (i != -1) {
-            state.myWalls[i].likes = payload.likes;
-            state.myWalls[i].liked = !state.myWalls[i].liked;
-        } else {
-            console.log("赞/取消赞失败...");
-        }
-    }
+
 }
 
 export default {

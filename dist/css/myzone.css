@@ -231,6 +231,18 @@ to {
   cursor: pointer;
   text-decoration: none;
 }
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  color: white;
+  font-size: 24px;
+}
+.loading span {
+  width: 3rem;
+  height: 3rem;
+}
 
 
 .wp[data-v-1c660a67] {
@@ -285,6 +297,25 @@ to {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+}
+}
+.fadeIn-enter-active {
+  animation: fadeIn 0.5s;
+}
+@-webkit-keyframes fadeIn {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+@keyframes fadeIn {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
 }
 }
 
@@ -364,6 +395,11 @@ to {
   text-align: center;
   color: white;
 }
+.followedFans {
+  position: absolute;
+  color: white;
+  bottom: 64px;
+}
 .userinfo {
   display: flex;
   position: absolute;
@@ -380,7 +416,8 @@ to {
   width: 50%;
   text-align: center;
 }
-.phone input, .email input{
+.phone input,
+.email input {
   padding-left: 16px;
 }
 input {

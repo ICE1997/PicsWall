@@ -4,10 +4,7 @@
       <b-col cols="6" class="previewModule">
         <b-row class="picsWallPreviewModule">
           <section class="picsWallPreviewMain">
-            <canvas
-              id="wallPreview"
-              class="picsWallPreview"
-            ></canvas>
+            <canvas id="wallPreview" class="picsWallPreview"></canvas>
           </section>
         </b-row>
 
@@ -94,7 +91,9 @@ export default {
       "picSource",
       "borderSource",
       "bcgSource",
-      "hangingSource"
+      "hangingSource",
+      "editingMode",
+      "editingData"
     ])
   },
   watch: {},
@@ -104,7 +103,11 @@ export default {
      */
     saveCanvas: function() {
       let c = this.mcs;
-      this.$store.dispatch("editor/save", JSON.stringify(c));
+      let payload = {
+        wall: JSON.stringify(c),
+        id: ""
+      };
+      this.$store.dispatch("editor/save", payload);
     },
     /**
      * 删除被选择的元素
@@ -146,7 +149,7 @@ export default {
      * 将选择的图片作为背景图片
      */
     setAsBcg: function() {
-      let c = this.mcs  ;
+      let c = this.mcs;
       console.log(c.getActiveObject());
       if (!c.getActiveObject()) {
         return;
@@ -245,14 +248,21 @@ export default {
      *  加载素材
      */
     loadMaterial() {
-      this.$store.dispatch("editor/loadMaterial")
+      this.$store.dispatch("editor/loadMaterial");
     }
   },
   mounted() {
-    this.$store.dispatch("user/init"),
-      this.initEditor(),
-      this.initP(),
-      this.loadMaterial();
+    this.$store.dispatch("user/init");
+    this.initEditor();
+    this.initP();
+    this.loadMaterial();
+    console.log("编辑模式")
+    console.log(this.editingMode);
+    console.log(this.editingData.canvasData);
+    // if (this.editingMode) {
+      console.log("可以编辑~~~");
+      this.mcs.loadFromJSON(this.editingData.canvasData, this.mcs.renderAll.bind(this.mcs));
+    // }
   }
 };
 </script>

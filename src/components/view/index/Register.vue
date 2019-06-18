@@ -36,7 +36,7 @@
       </b-form-group>
 
       <b-form-group label="手机号" label-for="regInputPhone">
-        <b-form-input id="regInputPhone" v-model="regPhone" trim></b-form-input>
+        <b-form-input id="regInputPhone" v-model="regQQ" trim></b-form-input>
       </b-form-group>
 
       <b-container class="btns">
@@ -63,7 +63,7 @@ export default {
       regUsername: "",
       regPassword: "",
       regEmail: "",
-      regPhone: "",
+      regQQ: "",
       regUserNameState: "",
       regEmailState: ""
     };
@@ -95,7 +95,7 @@ export default {
         username: this.regUsername,
         password: this.regPassword,
         email: this.regEmail,
-        phone: this.regPhone
+        qq: this.regQQ
       };
 
       this.$store.dispatch("user/register", newUser).then(() => {

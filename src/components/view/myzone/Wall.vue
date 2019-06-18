@@ -1,10 +1,10 @@
 <template>
   <div class="wp">
     <transition appear name="fadeInDown">
-      <a class="mcard" href="./editor.html" target="_blank">+</a>
+      <a class="container mcard" href="./editor.html" target="_blank">+</a>
     </transition>
     <wallCard
-      v-for="wall in myWalls"
+      v-for="wall in walls"
       :key="wall.id"
       :id="wall.id"
       :author="wall.author"
@@ -12,6 +12,10 @@
       :liked="wall.liked"
       :WJSON="wall.wallJSON"
     />
+    <div class="loading" v-show="!toTheEnd && loading">
+      <b-spinner small type="grow"></b-spinner>Loading...
+    </div>
+    <div class="loading" v-show="toTheEnd">已加载全部</div>
   </div>
 </template>
 
@@ -23,15 +27,40 @@ export default {
     return {};
   },
   computed: {
-    ...mapState("picsWall", ["myWalls"])
+    ...mapState("myzone", ["walls","loading","toTheEnd"]),
+    ...mapState("user",['logined'])
   },
   components: {
     WallCard
   },
   mounted: function() {
-    this.$store.dispatch("picsWall/loadMyWalls");
+    this.$store.dispatch("myzone/loadwalls");
+     this.loadmoreEvent();
   },
-  methods: {}
+  watch:{
+    logined(){
+     this.$store.dispatch("myzone/loadwalls");
+    }
+  },
+  methods: {
+    reqLoadmore() {
+      this.$store.dispatch("myzone/loadwalls");
+    },
+    loadmoreEvent() {
+      let t = this;
+      window.onscroll = function(e) {
+        let visibleTop =
+          document.body.scrollTop || document.documentElement.scrollTop; //当前可视范围的顶部
+        let visibleHeight = document.documentElement.clientHeight; //可视范围的高度
+        let allHeight = document.body.clientHeight; //整个文档的高度，因此visibleTop + viibleHeight == allHeight;
+        if (visibleTop + visibleHeight >= allHeight - 500 && !t.loading) {
+          console.log("到达底部了~~~");
+
+          t.reqLoadmore();
+        }
+      };
+    }
+  }
 };
 </script>
 
@@ -90,6 +119,20 @@ export default {
   color: black;
   cursor: pointer;
   text-decoration: none;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  color: white;
+  font-size: 24px;
+}
+
+.loading span {
+  width: 3rem;
+  height: 3rem;
 }
 </style>
 

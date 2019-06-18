@@ -23,31 +23,57 @@ const state = {
     bcgSource: [],
     borderSource: [],
     hangingSource: [],
+    editingMode: false,
+    editingData: {
+        wallID: "",
+        canvasData: ""
+    }
 }
 
 
 const actions = {
+    init({ commit }) {
+        if (!state.editingMode) {
+            editingData.wallID = "";
+            editingData.canvasData = ""
+        }
+    },
     addToPicSource({ commit }, pic) {
         commit("updatePicSource", pic);
     },
-    save({ rootState }, payload) {
+    save({ rootState, state }, payload) {
         let logined = rootState.user.logined;
         if (logined) {
-            let reqbody = {
-                token: rootState.user.userInfo.token,
-                wall: payload
-            }
-            Axios({
-                method: "POST",
-                url: SERVER + '/upload/img',
-                data: {
-                    token: reqbody.token,
-                    wall: reqbody.wall
+            if (state.editingMode) {
+                Axios({
+                    method: "post",
+                    url: SERVER + "/info/updatepublicwalls",
+                    data: {
+                        token: rootState.user.userInfo.token,
+                        wall: payload.wall,
+                        id: payload.id
+                    }
+                }).then(response => {
+                    console.log(response);
+                })
+            } else {
+                let reqbody = {
+                    token: rootState.user.userInfo.token,
+                    wall: payload.wall
                 }
-            }).then(function(response) {
-                console.log(response);
-            })
-            console.log(reqbody);
+                Axios({
+                    method: "POST",
+                    url: SERVER + '/upload/img',
+                    data: {
+                        token: reqbody.token,
+                        public: 1,
+                        wall: reqbody.wall
+                    }
+                }).then(function(response) {
+                    console.log(response);
+                })
+                console.log(reqbody);
+            }
         } else {
             console.log("请登录!");
         }
@@ -63,6 +89,34 @@ const actions = {
             commit('updateBorderSource', payload.border);
             commit('updateHangingSource', payload.hanging);
         })
+    },
+    reqEdit({ commit }, payload) {
+        return new Promise((resolve, rejects) => {
+            Axios({
+                method: "post",
+                url: SERVER + "/info/checkpublicwalls",
+                data: {
+                    id: payload.id
+                }
+            }).then(response => {
+                console.log(response);
+                if (response.data.data == null) {
+                    resolve(false);
+                }
+                if (response.data.data !== null) {
+                    let payload = {
+                        wallID: response.data.data._id,
+                        canvasData: response.data.data.imgpath
+                    }
+                    commit("updateEditingMode");
+                    commit("updateEditingData", payload);
+                    resolve(true);
+                }
+            })
+        })
+    },
+    setEditalbe({ commit }) {
+        commit("updateEditingMode");
     }
 }
 
@@ -106,6 +160,15 @@ const mutations = {
             }
             state.bcgSource.push(temp);
         }
+    },
+    updateEditingMode(state) {
+        state.editingMode = true;
+    },
+    updateEditingData(state, payload) {
+        state.editingData.wallID = payload.wallID;
+        state.editingData.canvasData = payload.canvasData;
+        console.log("啦啦啦~~~")
+        console.log(state.editingData);
     }
 }
 

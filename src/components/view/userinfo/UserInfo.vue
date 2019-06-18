@@ -5,21 +5,32 @@
       <Nav class="navigator"/>
       <div class="blur"></div>
       <transition appear name="fadeInDown">
-        <div class="username">CXK</div>
+        <div class="username">{{username}}</div>
       </transition>
 
-      <div class="briefIntro">大家好，我是实习练习生CXK,希望大家喜欢我。</div>
+      <transition appear name="fadeInDown">
+        <div class="followedFans">关注人数:{{followedFans}}</div>
+      </transition>
+
+      <div class="briefIntro">{{info.briefIntro}}</div>
 
       <transition appear name="fadeInDown">
-        <b-button class="follow">关注</b-button>
+        <b-button @click="follow" v-if="!followed" class="follow">关注</b-button>
+        <b-button @click="follow" v-if="followed" class="follow">已关注</b-button>
       </transition>
       <transition appear name="fadeInDown">
-        <div class="usericon">C</div>
+        <div class="usericon">{{firstA}}</div>
       </transition>
 
       <div class="userinfo">
-        <div class="phone">手机号:18756005001</div>
-        <div class="email">E-mail:592092078@qq.com</div>
+        <div class="phone">
+          QQ:
+          <span>{{info.qq}}</span>
+        </div>
+        <div class="email">
+          E-mail:
+          <span>{{info.email}}</span>
+        </div>
       </div>
     </header>
 
@@ -30,6 +41,47 @@
     <Foot/>
   </div>
 </template>
+
+<script>
+import Nav from "../index/Navigator.vue";
+import Foot from "../index/Footer.vue";
+import Wall from "../userinfo/Wall.vue";
+import GoTop from "../index/GoTop.vue";
+import { mapState } from "vuex";
+
+export default {
+  components: {
+    Nav,
+    Foot,
+    Wall,
+    GoTop
+  },
+  computed: {
+    ...mapState("otherszone", ["username", "info", "followed", "followedFans"]),
+    ...mapState("user", ["logined"]),
+    firstA() {
+      return this.username.charAt(0);
+    }
+  },
+  methods: {
+    follow() {
+      this.$store.dispatch("otherszone/follow");
+    }
+  },
+  watch: {
+    logined() {
+      this.$store.dispatch("user/init");
+    }
+  },
+  created() {
+    this.$store.dispatch("user/init");
+    this.$store.dispatch("otherszone/init");
+    this.$store.dispatch("otherszone/checkFollowed");
+    this.$store.dispatch("otherszone/loadInfo");
+    this.$store.dispatch("otherszone/getFollowersNum");
+  }
+};
+</script>
 
 
 <style>
@@ -128,6 +180,14 @@
   font-size: 64px;
 }
 
+.followedFans {
+  position: absolute;
+  color: white;
+  align-self: center;
+  bottom: 70px;
+  right: 42%;
+}
+
 .usericon {
   position: absolute;
   display: flex;
@@ -171,27 +231,15 @@
   width: 50%;
   text-align: center;
 }
+
+.phone span,
+.email span {
+  padding-left: 16px;
+}
 </style>
 
 
-<script>
-import Nav from "../index/Navigator.vue";
-import Foot from "../index/Footer.vue";
-import Wall from "../userinfo/Wall.vue";
-import GoTop from "../index/GoTop.vue";
 
-export default {
-  components: {
-    Nav,
-    Foot,
-    Wall,
-    GoTop
-  },
-  created() {
-    this.$store.dispatch("user/init");
-  }
-};
-</script>
 
 
 

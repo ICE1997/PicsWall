@@ -36,7 +36,7 @@ export default {
         let payload = {
           id: this.id
         };
-        this.$store.dispatch("picsWall/like", payload);
+        this.$store.dispatch("myzone/like", payload);
       } else {
         console.log("请先登录~~~");
       }

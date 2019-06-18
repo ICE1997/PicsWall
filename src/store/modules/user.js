@@ -18,12 +18,11 @@ const state = {
     loginState: {
         succeed: false,
         responseCode: ''
-    }
+    },
 }
 
 const actions = {
     init({ commit }) {
-        console.log("Hahfha");
         commit("init");
     },
     login({ commit }, loginInfo) {
@@ -61,14 +60,25 @@ const actions = {
                 data: {
                     username: newUser.username,
                     email: newUser.email,
-                    password: newUser.password
+                    password: newUser.password,
+                    qq: newUser.qq
                 }
             }).then(function(response) {
                 commit('newRegister', response);
                 resolve();
             })
         })
-    }
+    },
+    follow({ commit }, payload) {
+        axios({
+            method: 'post',
+            url: SERVER + '',
+            data: {
+
+            }
+        })
+    },
+
 }
 
 
@@ -154,8 +164,17 @@ const mutations = {
                 state.userInfo.username = "";
                 state.userInfo.token = "";
             }
+        } else {
+            state.logined = false;
+            state.userInfo.username = "";
+            state.userInfo.token = "";
+            localStorage.removeItem("usrToken");
+            localStorage.removeItem("logined");
+            localStorage.removeItem("usrName");
+            localStorage.removeItem("expireTime");
         }
-    }
+    },
+
 }
 
 

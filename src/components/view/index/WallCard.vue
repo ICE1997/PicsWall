@@ -3,7 +3,12 @@
     <b-container class="wp-card">
       <canvas :id="id"></canvas>
       <b-container class="wp-card-info">
-        <a class="publisher" href="./userinfo.html" target="_blank">{{author}}</a>
+        <a
+          @click="checkoutAuthor(author)"
+          class="publisher"
+          href="./userinfo.html"
+          target="_blank"
+        >{{author}}</a>
         <div class="like">
           <font-awesome-icon
             icon="heart"
@@ -31,6 +36,12 @@ export default {
   },
   watch: {},
   methods: {
+    checkoutAuthor(author) {
+      let payload = {
+        user: author
+      };
+      this.$store.dispatch("otherszone/checkoutAuthor", payload);
+    },
     like: function(e) {
       if (this.logined) {
         let payload = {
@@ -47,7 +58,7 @@ export default {
       mcs.setHeight(960 * 0.41667);
       mcs.setWidth(960 * 0.83333);
       mcs.loadFromJSON(json, mcs.renderAll.bind(mcs));
-    },
+    }
   },
   mounted() {
     this.init();

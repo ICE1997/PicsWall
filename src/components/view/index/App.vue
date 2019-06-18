@@ -13,7 +13,6 @@ import mContent from "./Content.vue";
 import mGoTop from "./GoTop.vue";
 import mFooter from "./Footer.vue";
 import mLogin from "./Login.vue";
-import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
