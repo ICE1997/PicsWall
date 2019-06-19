@@ -67,7 +67,7 @@ export default {
       };
       this.$store.dispatch("editor/reqEdit", payload).then(data => {
         if (data) {
-          this.$store.dispatch("editor/setEditalbe");
+          // this.$store.dispatch("editor/setEditalbe");
           window.open("editor.html");
         } else {
           console.log("不可编辑~~~");
